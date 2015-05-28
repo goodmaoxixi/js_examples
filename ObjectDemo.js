@@ -14,7 +14,8 @@ console.log(day1.squirrel );
 console.log(day1.wolf);
 // → undefined
 
-day1.wolf = false ;
+// Appends key wolf and its value
+day1.wolf = false;
 console.log(day1.wolf);
 // → false
 

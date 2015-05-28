@@ -3,7 +3,7 @@
 
 x = 
   la:  
-    li :  
+    li:  
       lu:  
         chunky:  
           bacon:  
