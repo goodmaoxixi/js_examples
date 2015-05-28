@@ -29,7 +29,7 @@ var landscape = function() {
 console.log(landscape());
 // ___/''''\______/'\_
 
-/* Hoever, the following variable something is the same. */
+/* Hoever, the following variable something is the same, in the same scope. */
 var something = 1;
 console.log("something = ", something);
 {

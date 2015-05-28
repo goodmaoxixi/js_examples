@@ -1,2 +1,2 @@
 # js_examples
-Some JavaScript examples
+Some JavaScript examples, including CoffeeScript ones.
