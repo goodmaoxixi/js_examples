@@ -76,3 +76,43 @@ function gatherCorrelations2(journal) {
   });
   return phis;
 }
+
+// Higher-order functions allow us to abstract over actions, not just values.
+// They come in several forms. For example, you can have functions that create new functions.
+console.log("--- Have functions create new functions ---");
+function greaterThan(n) {
+  return function(m) { return m > n; };
+}
+var greaterThan10 = greaterThan(10);
+console.log(greaterThan10(11));
+
+// Have functions change other functions
+console.log("--- Have functions change other functions ---");
+function noisy(f) {
+  return function(arg) {
+    console.log("Calling with ", arg ) ;
+    var val = f(arg); // type cast?
+    console.log ("Called with " , arg , " - got ", val );
+    return val;
+  };
+}
+noisy(Boolean)(0);
+// → calling with 0
+// → called with 0 - got false
+noisy(Boolean)(2);
+
+// You can even write functions that provide new types of control flow
+console.log("--- Have functions provide new types of control flow ---");
+function unless(test, then) {
+  if (!test) then();
+}
+function repeat(times, body) {
+  for (var i = 0; i < times; i++) body(i);
+}
+repeat(3, function(n) {
+  unless(n % 2, function() {
+    console.log(n, " is even");
+  });
+});
+// → 0 is even
+// → 2 is even
