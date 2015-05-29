@@ -1,4 +1,9 @@
-/* Both the name(key) and the value use the same word */
+/**
+ * Create on May 29, 2015 Fri.
+ * Both the name(key) and the value use the same word, a test to understand Ruby gem bootstrap-x-editable-rails.
+ * See https://github.com/klenis/bootstrap-x-editable-rails-demo
+ * See also http://vitalets.github.io/x-editable.
+ */
 console.log("--- Both the name and the value use the same word ---");
 myObject = {};
 params = {};
