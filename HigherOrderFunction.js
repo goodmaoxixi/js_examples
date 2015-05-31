@@ -91,15 +91,18 @@ console.log("--- Have functions change other functions ---");
 function noisy(f) {
   return function(arg) {
     console.log("Calling with ", arg ) ;
-    var val = f(arg); // type cast?
+    var val = f(arg); // type cast (coercion)
     console.log ("Called with " , arg , " - got ", val );
     return val;
   };
 }
+/* 5 primitive types: undefined, null, Boolean, Number, String. */
 noisy(Boolean)(0);
 // → calling with 0
 // → called with 0 - got false
 noisy(Boolean)(2);
+noisy(Number)(3);
+noisy(String)(4);
 
 // You can even write functions that provide new types of control flow
 console.log("--- Have functions provide new types of control flow ---");
@@ -111,7 +114,7 @@ function repeat(times, body) {
 }
 repeat(3, function(n) {
   unless(n % 2, function() {
-    console.log(n, " is even");
+    console.log("%d is even", n);
   });
 });
 // → 0 is even
