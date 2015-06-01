@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<!--
+  Create on May 31, 2015 Sun.
+  See page 252, 14 Handling Events, Eloquent JavaScript, A Modern Introduction to Programming by Marijn Haverbeke
+ -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+    .highlight {
+    background-color: yellow;
+      font-weight: 120%;
+    }  
+  </style>
+</head>
+
+<body>
+  <p>Click this document to activate the handler.</p>
+  <button>Click me</button>    
+  <p>No handler here.</p>
+  <button id="act-once-button">Act-once button</button><br />
+  <button id="events-objects">Event Objects</button>
+  
+  <ul id="nav">
+    <li><a href="#">Page 2</a></li>
+    <li><a href="#">Page 3</a></li>
+    <li><a href="#">Page 4</a></li>
+    <li><a href="#">Page 5</a></li>
+  </ul>
+  
+  <!-- JavaScript reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference -->
+  <script type="text/JavaScript">
+    // A global event handler for object window (this), responding to all triggers.
+    addEventListener("click", function() {
+      console.log("You clicked!");
+    });
+    
+    // Events and DOM nodes
+    var button = document.querySelector("button");
+    button.addEventListener("click", function() {
+      console.log("Button clicked.");
+    });
+    
+    // https://developer.mozilla.org/en-US/docs/Web/API/document
+    var actOnceButton = document.getElementById("act-once-button");
+    function once() {
+	  console.log("Done.");
+	  actOnceButton.removeEventListener("click", once);
+    }
+    actOnceButton.addEventListener("click", once);
+    
+    // Event objects
+     var button3 = document.getElementById("events-objects");
+     button3.addEventListener("mousedown", function(event) {
+	  if (event.which == 1)
+        console.log ("Left button") ;
+      else if (event.which == 2)
+        console.log ("Middle button") ;
+      else if (event.which == 3)
+        console.log ("Right button") ;
+      });
+  </script>
+</body>
+</html>
