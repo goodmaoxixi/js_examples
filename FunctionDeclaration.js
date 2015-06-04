@@ -44,9 +44,9 @@ function foo(p) {
 	p();
 }
 foo(function () {
-  console.log("I'm a anonymous function expression");
+  console.log("I'm an anonymous function declaration");
 })
 foo(function f1() {
-  console.log("I'm a named function expression");
+  console.log("I'm a named function declaration");
 })
 

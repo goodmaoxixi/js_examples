@@ -15,6 +15,7 @@
 var dayName = function() {
   var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
     "Thursday", "Friday", "Saturday"];
+  //console.log("hi");
   return function(number) {
 	return names[number];
   };
