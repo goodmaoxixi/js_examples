@@ -46,6 +46,7 @@ MySubClass.prototype.method1 = function() {
 var msc = new MySubClass("SubWorld");
 msc.method1("subclass");
 
+
 console.log("--- 1. Object Fundamentals (1:18)  ---");
 /**
  * Common JavaScript Types
