@@ -24,7 +24,7 @@ var dayName = function() {
 console.log(dayName(3));
 // → Wednesday
 
-/** Create an anonymous function first, assign it to a var, and them call it separately. */
+/** Create an anonymous function first, assign it to a var, and then call it separately. */
 var dayName2 = function() {
   var names = ["Sunday", "Monday", "Tuesday", "Wednesday",
     "Thursday", "Friday", "Saturday"];
