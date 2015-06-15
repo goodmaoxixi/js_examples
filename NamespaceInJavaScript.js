@@ -1,6 +1,6 @@
 /**
  * Create on June 12, 2015 Fri.
- * A technique to create namespace in JavaScript.
+ * A technique to create namespaces in JavaScript.
  * 
  * Namespaces in JavaScript
  * https://www.youtube.com/watch?v=9p-uDkWqqKU.
