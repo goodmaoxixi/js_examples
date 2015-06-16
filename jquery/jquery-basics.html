@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <!-- See http://learn.jquery.com/using-jquery-core/document-ready/ -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>  
+  <title>Demo</title>
+  <style>
+    a.test {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="http://jquery.com/">jQuery</a>
+  <script>
+    //$( document ).ready(function() { // original
+    //$().ready(function() { // simpler, not recommended
+    // Shorthand for $( document ).ready(), the simplest syntax
+    $(function() {
+      /* $( "a" ).click(function( event ) {
+        alert( "As you can see, the link no longer took you to jquery.com" );
+        event.preventDefault();
+      }); */
+      $( "a" ).addClass( "test" );
+      
+      $( "a" ).click(function( event ) { 
+        event.preventDefault();
+        $( this ).hide( "slow" );
+      });
+      
+      // .click(), .focus(), .blur(), .change(), etc. — are shorthand for jQuery's .on() method
+      // Equivalent event setup using the `.on()` method
+      $( "a" ).on( "click", function() {
+        console.log( "click" );
+      });
+    });
+  </script>
+</body>
+</html>

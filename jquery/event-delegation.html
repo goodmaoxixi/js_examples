@@ -2,7 +2,6 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <!-- http://learn.jquery.com/events/event-delegation/ -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <title>Event Delegation</title>
@@ -17,11 +16,13 @@
       <li><a href="#">Item #4</a></li>
     </ul>
   </div>
+  
+   <!-- http://learn.jquery.com/events/event-delegation/ -->
   <script type="text/javascript" >
     $(function() {
 	  // Attach a directly bound event handler
       //$("#list a").on("click", function(event) {
-	  // Attach a delegated event handler
+	  // Attach a delegated event handler. Notice anchor 'a' moved to the .on() method. 
       $("#list").on("click", "a", function(event) {
         event.preventDefault();
         console.log($(this).text());
