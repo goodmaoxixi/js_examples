@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Custom Event</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <style>
+    .off {
+	  background-color: grey;	
+      font-weight: 100%;
+    }
+    .on {
+      background-color: green;
+      font-weight: 120%;
+    }    
+  </style>
+</head>
+
+<body>
+  <div class="room" id="kitchen">
+    <div class="lightbulb on">Kitchen Lightbulb On</div>
+    <div class="switch"><button>Switch 1</button></div>
+    <div class="switch"><button>Switch 2</button></div>
+    <div class="clapper"><button>Clapper 1</button></div>
+  </div>
+  
+  <br />
+  <div class="room" id="bedroom">
+    <div class="lightbulb on">Bedroom Lightbulb On</div>
+    <div class="switch"><button>Switch 3</button></div>
+    <div class="switch"><button>Switch 4</button></div>
+    <div class="clapper"><button>Clapper 2</button></div>
+  </div>
+  
+  <br />  
+  <div id="master_switch"><button>Master Switch</button></div>  
+  
+  <!-- http://learn.jquery.com/events/introduction-to-custom-events/ -->
+  <script type="text/javascript" src="custom-event2.js"></script>
+</body>
+</html>
