@@ -23,7 +23,8 @@
 	  // Attach a directly bound event handler
       //$("#list a").on("click", function(event) {
 	  // Attach a delegated event handler. Notice anchor 'a' moved to the .on() method. 
-      $("#list").on("click", "a", function(event) {
+      //$("#list").on("click", "a", function(event) { // OK
+	  $("#list").on("click", "li a", function(event) { // OK, too
         event.preventDefault();
         console.log($(this).text());
       });
