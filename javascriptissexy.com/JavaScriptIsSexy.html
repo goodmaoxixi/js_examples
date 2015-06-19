@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>  
+  <title>JavaScriptIsSexy.com</title>
+  <style>
+    a.test {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <p>
+    <button id="button01" name="button01">Hello,  JS!</button>
+  </p>
+  <p>
+    <button id="button02" name="button02">JS Is Great!</button>
+  </p>
+  
+  <script>
+    $(function() {
+	  $("#button01").click(function(event) {
+        // $(this) will have the value of the button ($("button")) object​
+        // because the button object invokes the click () method​
+        console.log($(this).prop("name"));
+      });
+      
+      var user = {
+        data: [ {name:"T. Woods", age:37},
+          {name:"P. Mickelson", age:43} ],
+  
+        clickHandler: function(event) {
+        var randomNum = ((Math.random () * 2 | 0) + 1) - 1; // random number between 0 and 1​
+            // This line is printing a random person's name and age from the data array​
+            console.log (this.data[randomNum].name + " " + this.data[randomNum].age);
+         }
+       };
+ 
+       // The button is wrapped inside a jQuery $ wrapper, so it is now a jQuery object​
+       // And the output will be undefined because there is no data property on the button object​
+       //$("#button02").click(user.clickHandler); // Cannot read property '0' of undefined
+       $("#button02").click (user.clickHandler.bind (user)); // P. Mickelson 43 
+	 });
+  </script>
+</body>
+</html>
