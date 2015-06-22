@@ -11,7 +11,11 @@
  * for the variables of the inner function. Also, since the inner function has access to the scope of
  * the outer function, the variables and functions defined in the outer function will live longer than
  * the outer function itself, if the inner function manages to survive beyond the life of the outer function.
+ * 
  * A closure is created when the inner function is somehow made available to any scope outside the outer function.
+ * 
+ * Fix this inside closure: http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/
+ * Simply put, a closure is an inner method.
  */
 console.log("--- A simple closure --");
 var pet = function(name) {   // The outer function defines a variable called "name"
