@@ -22,11 +22,11 @@ var pet = function(name) {   // The outer function defines a variable called "na
   var getName = function() {
     return name;                       // The inner function has access to the "name" variable of the outer function
   }
-  return getName;                  // Return the inner function, thereby exposing it to outer scopes
-}, // OK
-//}; // OK, too
+  return getName;                  // Returns the inner function, thereby exposing it to outer scopes. A closure.
+//}, // OK
+}; // OK, too, recommended
 
-myPet = pet("Vivie"); // vs function pointers in C/C++
+var myPet = pet("Vivie"); // vs function pointers in C/C++
 // Returns "Vivie"
 console.log(myPet());
 
@@ -61,9 +61,10 @@ var createPet = function(name) {
 }
 
 var pet = createPet("Vivie");
-console.log(pet.getName()); // Vivie
+// Clousures: getName(), getSex()
+console.log(pet.getName() + ": " + pet.getSex()); // Vivie: undefined. Clousures.
 
+// Clousures: setName(), setSex()
 pet.setName("Oliver");
 pet.setSex("male");
-console.log(pet.getSex()); // male
-console.log(pet.getName()); // Oliver
+console.log(pet.getName() + ": " + pet.getSex()); // Oliver: male
