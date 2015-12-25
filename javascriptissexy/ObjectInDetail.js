@@ -119,9 +119,9 @@ aMango.printStuff = function() { return "Printing"; };
 // Now we can invoke the printStuff method:
 console.log(aMango.printStuff());
 
+
 console.log("4.2 *** Prototype Pattern for Creating Objects ---");
-function Fruit4() {
-}
+function Fruit4() {}
 
 Fruit4.prototype.color = "Yellow";
 Fruit4.prototype.sweetness = 7;

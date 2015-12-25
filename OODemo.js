@@ -29,7 +29,8 @@ MyClass.prototype.method1 = function(name) {
   console.log("Hello, ", name);
   console.log("this = ", this);
 };
-// Creates an instance
+// Creates an instance of MyClass
+console.log(">>> Creates an instance of MyClass");
 var mc = new MyClass("World");
 mc.method1("there");
 
@@ -42,22 +43,23 @@ MySubClass.prototype.constructor = MySubClass;
 MySubClass.prototype.method1 = function() {
   MyClass.prototype.method1.call(this);
 };
-// Creates an instance
+// Creates an instance of MySubClass
+console.log(">>> Creates an instance of MySubClass");
 var msc = new MySubClass("SubWorld");
 msc.method1("subclass");
 
 
-console.log("--- 1. Object Fundamentals (1:18)  ---");
+console.log("\n--- 1. Object Fundamentals (1:18)  ---");
 /**
  * Common JavaScript Types
- * --- 6 primitive Types (passed by value)
+ * --- 6 primitive Types (pass-by-value)
  * 1. undefined: undefined
  * 2. null: null
  * 3. Boolean: true, false
  * 4. String: "foo"
  * 5. Number: 3.1415
- * 6. Object: { bar: "baz" }
- * --- 3 Special Objects (passed by reference)
+ * 6. Object: { bar: "baz" } (!!pass-by-reference)
+ * --- 3 Special Objects (pass-by-reference)
  * 7. Function: function qux { ... }
  * 8. Array: [ "hoge", 42 ]
  * 9. RegExp: /piyo/
@@ -90,7 +92,7 @@ var myObject = {
   },
   val: 42
 };
-console.log(myObject.get());
+console.log(myObject.get()); // 42
 
 // Puts a function in the global scope
 function myMethod() {
@@ -104,8 +106,8 @@ var object3 = {
   get: myMethod,
   val: 3.1415
 };
-console.log(object2.get());
-console.log(object3.get());
+console.log(object2.get()); // 43
+console.log(object3.get()); // 3.1415
 // Method call forces this to refer to object2
 console.log(myMethod.call(object2));
 
