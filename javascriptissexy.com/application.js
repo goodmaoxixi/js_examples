@@ -1,5 +1,5 @@
 /**
- * Create on Jun. 20, 2015 Sat.
+ * Created on Jun. 20, 2015 Sat.
  * Used by JavaScriptIsSexy.html
  * Examples from an excellent website on JS: http://javascriptissexy.com/ by  Richard Bovell.
  * 

@@ -1,5 +1,5 @@
 /**
- * Create on May 31, 2015 Sun.
+ * Created on May 31, 2015 Sun.
  * 
  * Use keyword 'new' to creat an object.
  * Run with Node.js: node ./ConstructorDemo.js

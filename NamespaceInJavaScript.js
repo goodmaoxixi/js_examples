@@ -1,5 +1,5 @@
 /**
- * Create on June 12, 2015 Fri.
+ * Created on June 12, 2015 Fri.
  * A technique to create namespaces in JavaScript.
  * 
  * Namespaces in JavaScript

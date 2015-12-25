@@ -1,5 +1,5 @@
 /**
- * Create on May 30, 2015 Sat.
+ * Created on May 30, 2015 Sat.
  * 
  * JavaScript Essentials by Travis Tidwell
  * https://www.youtube.com/watch?v=03EQu_2K2cs

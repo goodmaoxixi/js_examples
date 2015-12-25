@@ -1,4 +1,4 @@
-# Create on May 27, 2015 Wed.
+# Created on May 27, 2015 Wed.
 # Defines function coffee
 # Highly recommend to install extenstion CoffeeConsole from the Chrome App Store to try CoffeeScript.
 

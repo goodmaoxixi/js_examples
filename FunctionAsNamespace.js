@@ -1,5 +1,5 @@
 /**
- * Create on June 3, 2015 Wed.
+ * Created on June 3, 2015 Wed.
  * Page 191, Using functions as namespaces,
  * Eloquent JavaScript, A Modern Introduction to Programming by Marijn Haverbeke
  * Run with Node.js: node ./FunctionAsNamespace.js

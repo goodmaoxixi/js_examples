@@ -1,5 +1,5 @@
 /**
- * Create on Aug. 27, 2015 Thu.
+ * Created on Aug. 27, 2015 Thu.
  * 
  * Used by CallbackFunctions.html
  * http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/

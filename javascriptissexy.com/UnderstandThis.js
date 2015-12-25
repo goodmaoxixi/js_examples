@@ -1,5 +1,5 @@
 /**
- * Create on Jun. 19, 2015 Fri.
+ * Created on Jun. 19, 2015 Fri.
  * Examples from an excellent website on JS: http://javascriptissexy.com/ by  Richard Bovell.
  * Run in Node.js: node ./UnderstandThis.js
  *

@@ -1,5 +1,5 @@
 /**
- * Create on May 30, 2015 Sat.
+ * Created on May 30, 2015 Sat.
  * 
  * Closures https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#Closures
  * 

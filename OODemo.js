@@ -1,5 +1,5 @@
 /**
- * Create on June 6, 2015 Sat.
+ * Created on June 6, 2015 Sat.
  * Run with Node.js: node ./OODemo.js
  * 
  * The Definitive Guide to Object-Oriented JavaScript
@@ -17,7 +17,7 @@
  * 10. Recommendations (24:56)
  */
 console.log("--- 0. Prelude: Classes & subclasses ---");
-// Defines a class
+// Defines a class (CamelCase)
 function MyClass(name) {
   this.name = name;
   console.log("this = ", this);
@@ -74,7 +74,7 @@ function myFunction(a, b) {
 myFunction.foo = 'bar';
 var a = 2, b = 3;
 console.log("%d * %d = %d", a, b, myFunction(a, b));
-console.log(myFunction.foo);
+console.log("myFunction.foo = %s", myFunction.foo);
 
 /* Objects are passed by reference. */
 var myFun2 = myFunction;
