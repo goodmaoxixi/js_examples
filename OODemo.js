@@ -23,7 +23,7 @@ function MyClass(name) {
   console.log("this = ", this);
 }
 
-// Adds a method to the class
+// Adds a method to the class (the classical model)
 MyClass.prototype.method1 = function(name) {
   console.log("Hello, ", this.name);
   console.log("Hello, ", name);
@@ -40,7 +40,7 @@ function MySubClass(name) {
 }
 MySubClass.prototype = Object.create(MyClass.prototype);
 MySubClass.prototype.constructor = MySubClass;
-MySubClass.prototype.method1 = function() {
+MySubClass.prototype.method1 = function() { // overriding
   MyClass.prototype.method1.call(this);
 };
 // Creates an instance of MySubClass
@@ -52,14 +52,14 @@ msc.method1("subclass");
 console.log("\n--- 1. Object Fundamentals (1:18)  ---");
 /**
  * Common JavaScript Types
- * --- 6 primitive Types (pass-by-value)
+ * --- Six primitive Types (pass-by-value)
  * 1. undefined: undefined
  * 2. null: null
  * 3. Boolean: true, false
  * 4. String: "foo"
  * 5. Number: 3.1415
  * 6. Object: { bar: "baz" } (!!pass-by-reference)
- * --- 3 Special Objects (pass-by-reference)
+ * --- Three Special Objects (pass-by-reference)
  * 7. Function: function qux { ... }
  * 8. Array: [ "hoge", 42 ]
  * 9. RegExp: /piyo/
@@ -73,12 +73,15 @@ function myFunction(a, b) {
   this.b = b;
   return a*b;
 }
+
+// A function is an object. Objects are passed by reference.
+// The following line assigns a property to the function.
 myFunction.foo = 'bar';
 var a = 2, b = 3;
 console.log("%d * %d = %d", a, b, myFunction(a, b));
 console.log("myFunction.foo = %s", myFunction.foo);
 
-/* Objects are passed by reference. */
+//  This assigns the function to a variable.
 var myFun2 = myFunction;
 var c = 4.2, d = 2.1;
 console.log(c + " * " + d + " = " + myFun2(c, d));
@@ -121,13 +124,14 @@ var parent = {
   val: 44
 };
 
+console.log(parent.get());
 // Inherits (extends ) object parent
 var child = Object.create(parent);
 child.val = 45;
+console.log(child.get()); // 45
 var grandchild = Object.create(child);
-console.log(child.get());
-//grandchild.val = 46;
-console.log(grandchild.get());
+grandchild.val = 46;
+console.log(grandchild.get()); // 46
 
 
 console.log("\n--- 4. Polymorphism & method overriding ---");
@@ -141,9 +145,12 @@ console.log(answer.get());
 
 var firmAnswer = Object.create(answer);
 firmAnswer.get = function fn2() { // method overriding
-  return this.val + "!!";
+  //return this.val + "!!"; // Duplication
+  //return answer.get() + "!!"; // 144!!
+  return answer.get.call(this) + "!!"; // Calls the same method in the parent
 };
-console.log(firmAnswer.get());
+firmAnswer.val = 3.14159;
+console.log(firmAnswer.get()); // 3.14159!!
 
 
 console.log("\n--- 5. Classes & Instantiation (12:11), prototypal model ---");
@@ -183,7 +190,7 @@ function Answer(value) {
   this._val = value;
 }
 
-Answer.prototype.get = function fn3() { // append
+Answer.prototype.get = function fn3() { // Appends a property
   return this._val;
 };
 
@@ -199,7 +206,7 @@ function FirmAnswer3(value) {
 }
 FirmAnswer3.prototype = Object.create(Answer.prototype);
 FirmAnswer3.prototype.constructor = FirmAnswer3;
-FirmAnswer3.prototype.get = function fn4() { // append
+FirmAnswer3.prototype.get = function fn4() { // Overriding
   return Answer.prototype.get.call(this) + "!!";
 };
 
@@ -212,3 +219,4 @@ console.log(lifeAnswer instanceof Answer);
 console.log(lifeAnswer instanceof FirmAnswer3);
 console.log(lifeAnswer2 instanceof Answer);
 console.log(luckyAnswer3 instanceof FirmAnswer3);
+console.log(luckyAnswer3 instanceof Answer);
