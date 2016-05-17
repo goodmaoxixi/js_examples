@@ -14,6 +14,21 @@
 
 <body>
   <a href="http://jquery.com/">jQuery</a>
+  
+  <p><a href="http://learn.jquery.com/using-jquery-core/traversing/">Traversing</a></p>
+  <div class="grandparent">
+	<p>Grand Parent</p>
+    <div class="parent">
+      <p>Parent</p>
+      <div class="child">
+		<p>Child</p>
+        <span class="subchild"></span>
+      </div>
+    </div>
+    <div class="surrogateParent1"><p>surrogateParent1</p></div>
+    <div class="surrogateParent2"><p>surrogateParent2</p></div>
+  </div>
+
   <script>
     //$( document ).ready(function() { // original
     //$().ready(function() { // simpler, not recommended
