@@ -5,7 +5,7 @@
 // This form works
 module.exports = {
   myfun1: function() {
-    console.log("I'm in simple_fun.js, which is a JS module.");
+    console.log("I'm in simple_fun.js, a CommonJS module.");
   },
   myfun2: myfun
 };
@@ -13,5 +13,5 @@ module.exports = {
 // The elegant form. Cannot work.
 //module.exports = myfun;
 function myfun() {
-    console.log("myfun2 in module simple_fun.");
+  console.log("myfun2 in CommonJS module simple_fun.");
 }

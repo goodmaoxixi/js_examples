@@ -6,7 +6,7 @@
  * There is a slightly shorter way to say “var square = ...function” (function expression). The
  * function keyword can also be used at the start of a statement (function declaration).
  */
-// Function expression
+// Function expression (there's an assignment)
 var square1 = function(x) {
 	return x * x;
 };
@@ -14,7 +14,7 @@ var square1 = function(x) {
 var x = 2;
 console.log("The square of %d is %d.", x, square1(x));
  
-// Function declaration
+// Function declaration (no assignment)
 function square2(x) {
 	return x * x;
 } // no trailing ;
