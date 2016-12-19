@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <a href="http://jquery.com/">jQuery</a>
+  <a href="http://jquery.com/" id="main_anchor">jQuery</a>
   
   <p><a href="http://learn.jquery.com/using-jquery-core/traversing/">Traversing</a></p>
   <div class="grandparent">
@@ -39,30 +39,34 @@
 	</button>
   </div>
 
+  <a href="#" data-background-color="#990000">Paint it red</a><br />
+  <a href="#" data-background-color="#009900" data-text-color="#FFFFFF">Paint it green</a><br />
+  <a href="#" data-background-color="#000099" data-text-color="#FFFFFF">Paint it blue</a><br />
+
   <script>
-    //$( document ).ready(function() { // original
+    //$(document).ready(function() { // original
     //$().ready(function() { // simpler, not recommended
-    // Shorthand for $( document ).ready(), the simplest syntax
+    // Shorthand for $(document).ready(), the simplest syntax
     $(function() {
-      /* $( "a" ).click(function( event ) {
-        alert( "As you can see, the link no longer took you to jquery.com" );
+      /* $("a").click(function(event) {
+        alert("As you can see, the link no longer took you to jquery.com");
         event.preventDefault();
       }); */
       
       // http://stackoverflow.com/questions/1049112/what-is-the-meaning-of-symbol-in-jquery
       // By default, jQuery uses "$" as a shortcut for "jQuery".
       // So, using $("#id") or jQuery("#id") is the same.
-      $( "a" ).addClass( "test" );
+      $("a").addClass("test");
       
-      $( "a" ).click(function( event ) { 
+      $("#main_anchor").click(function(event) { 
         event.preventDefault();
-        $( this ).hide( "slow" );
+        $(this).hide("slow");
       });
       
       // .click(), .focus(), .blur(), .change(), etc. — are shorthand for jQuery's .on() method
       // Equivalent event setup using the `.on()` method
-      $( "a" ).on( "click", function() {
-        console.log( "click" );
+      $("a").on("click", function() {
+        console.log("click");
       });
     });
   </script>
