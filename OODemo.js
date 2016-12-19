@@ -18,15 +18,15 @@
  */
 console.log("--- 0. Prelude: Classes & subclasses ---");
 // Defines a class (CamelCase)
-function MyClass(name) {
+function MyClass(name) { // function declaration as a class
   this.name = name;
   console.log("this = ", this);
 }
 
 // Adds a method to the class (the classical model)
-MyClass.prototype.method1 = function(name) {
-  console.log("Hello, ", this.name);
-  console.log("Hello, ", name);
+MyClass.prototype.method1 = function(name) { // function expression
+  console.log("Hello, ", this.name); // class scope
+  console.log("Hello, ", name);      // function scope
   console.log("this = ", this);
 };
 // Creates an instance of MyClass
@@ -124,7 +124,7 @@ var parent = {
   val: 44
 };
 
-console.log(parent.get());
+console.log(parent.get()); // 44
 // Inherits (extends ) object parent
 var child = Object.create(parent);
 child.val = 45;
@@ -141,7 +141,7 @@ var answer = {
   },
   val: 144
 };
-console.log(answer.get());
+console.log(answer.get()); // 144
 
 var firmAnswer = Object.create(answer);
 firmAnswer.get = function fn2() { // method overriding
