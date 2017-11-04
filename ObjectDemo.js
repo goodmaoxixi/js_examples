@@ -33,7 +33,7 @@ console.log(day1.events);
 console.log(day1.events[0]);
 var i = 0;
 for (i = 0; i < day1.events.length; i++)
-	console.log("%d, %s", i, day1.events[i]);
+  console.log("%d, %s", i, day1.events[i]);
 
 var descriptions = {
   work: "Went to work" ,

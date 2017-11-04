@@ -14,7 +14,7 @@ rabbit.speak("I'm alive.") ;
 
 /**
  * Defines a function in the global object.
- * Keywor this as in C++, which refers to the Object calling this method.
+ * Keyword this as in C++, which refers to the Object calling this method.
  */
 function speak(line) {
   console.log("The " + this.type + " rabbit says '" + line + "'") ;
@@ -42,7 +42,7 @@ whiteRabbit.speak("Oh my ears and whiskers, " + " how late it 's getting!") ;
 fatRabbit.speak("I could sure use a carrot right now .") ;
 // → The fat rabbit says 'I could sure use a carrot right now.'
 
-/** Functions call and apply can assign the calling objects to this */
+/** Functions call and apply can assign the calling object to this */
 speak.apply(fatRabbit, ["Burp!"]); // Array form
 // → The fat rabbit says ' Burp !'
 speak.call({type: "old"}, "Oh my.") ; // Object form
