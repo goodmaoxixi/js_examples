@@ -9,6 +9,7 @@
 //}
 
 /**
+ * JavaScript Callbacks Variable Scope Problem by Itay Grudev:
  * http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/
  */
 // Defines an anonymous function & run it at once
