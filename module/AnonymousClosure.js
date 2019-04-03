@@ -22,4 +22,5 @@
   console.log(failing());
 }());
 
+// Your average grade is 70.33333333333333.
 // ‘You failed 2 times.’

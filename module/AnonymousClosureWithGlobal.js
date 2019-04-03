@@ -1,4 +1,4 @@
-https://medium.freecodecamp.com/javascript-modules-a-beginner-s-guide-783f7d7a5fcc#.2jkpzjofs
+// https://medium.freecodecamp.com/javascript-modules-a-beginner-s-guide-783f7d7a5fcc#.2jkpzjofs
 
 var global = 'Hello, I am a global variable :)';
 
@@ -27,3 +27,4 @@ var global = 'Hello, I am a global variable :)';
 
 // 'You failed 2 times.'
 // 'Hello, I am a global variable :)'
+// Your average grade is 70.33333333333333.

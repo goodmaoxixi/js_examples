@@ -43,7 +43,7 @@ whiteRabbit.speak("Oh my ears and whiskers, " + " how late it 's getting!") ;
 fatRabbit.speak("I could sure use a carrot right now .") ;
 // → The fat rabbit says 'I could sure use a carrot right now.'
 
-/** Functions call and apply can assign the calling objects to this */
+/** Functions call and apply can assign the calling object to this */
 speak.apply(fatRabbit, ["Burp!"]); // Array form
 // → The fat rabbit says ' Burp !'
 speak.call({type: "old"}, "Oh my.") ; // Object form

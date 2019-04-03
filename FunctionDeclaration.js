@@ -1,10 +1,15 @@
 /**
  * Created on May 28, 2015 Wed.
- * See Page 47 of Eloquent JavaScript, A Modern Introduction to Programming by Marijn Haverbeke
+ * See Page 47 of Eloquent JavaScript, A Modern Introduction to Programming
+ * by Marijn Haverbeke
  * Run with Node.js: node ./FunctionDeclaration.js
  * 
- * There is a slightly shorter way to say “var square = ...function” (function expression). The
- * function keyword can also be used at the start of a statement (function declaration).
+ * Function expression vs function declaration
+ *
+ * There is a slightly shorter way to say
+ * “var square = ...function” (This is a function expression).
+ * The function keyword can also be used at the start of a statement
+ * (function declaration).
  */
 // Function expression (there's an assignment)
 var square1 = function(x) {
@@ -13,11 +18,11 @@ var square1 = function(x) {
 
 var x = 2;
 console.log("The square of %d is %d.", x, square1(x));
- 
+
 // Function declaration (no assignment)
 function square2(x) {
 	return x * x;
-} // no trailing ;
+} // no trailing semi-colon ;
 
 x = 3;
 console.log("The square of %d is %d.", x, square2(x));
@@ -59,4 +64,3 @@ foo(function () {
 foo(function f1() {
   console.log("I'm a named function declaration");
 })
-
