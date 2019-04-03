@@ -26,7 +26,7 @@ function MyClass(name) { // function declaration as a class
 // Adds a method to the class (the classical model)
 MyClass.prototype.method1 = function(name) { // function expression
   console.log("Hello, ", this.name); // class scope
-  console.log("Hello, ", name);      // function scope
+  console.log("Hello, ", name);         // function scope
   console.log("this = ", this);
 };
 // Creates an instance of MyClass

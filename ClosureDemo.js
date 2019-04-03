@@ -24,26 +24,26 @@
  * Simply put, a closure is an inner method.
  */
 console.log("--- A simple closure --");
-// The outer function defines a variable called "name"
-// The inner function has access to the "name" variable of the outer function
+// The outer function defines a variable called "name".
+// The inner function has access to the "name" variable of the outer function.
 // Returns the inner function, thereby exposing it to outer scopes. A closure.
 var pet = function(name) {
   var getName = function() {
     return name;
-  }
+  };
   return getName;
 //}, // OK
 }; // OK, too, recommended
 
 var myPet = pet("Vivie"); // vs function pointers in C/C++
 // Returns "Vivie"
-console.log(myPet());
+console.log("The name of my pet :" + myPet());
 
 /*
  * A more complex one. An object containing methods for manipulating
  * the inner variables of the outer function can be returned.
  */
-console.log("--- A complex closure --");
+console.log("\n--- A complex closure --");
 var createPet = function(name) {
   var sex;
   

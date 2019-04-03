@@ -1,6 +1,7 @@
 /**
  * Created on May 31, 2015 Sun.
- * See Page 107 of Eloquent JavaScript, A Modern Introduction to Programming by Marijn Haverbeke
+ * See Page 107 of Eloquent JavaScript,
+ * A Modern Introduction to Programming by Marijn Haverbeke
  * Run with Node.js: node ./MethodDemo.js
  * 
  * Methods are simply properties (name + its value) that hold function values.
@@ -14,7 +15,7 @@ rabbit.speak("I'm alive.") ;
 
 /**
  * Defines a function in the global object.
- * Keywor this as in C++, which refers to the Object calling this method.
+ * Keyword this as in C++, which refers to the Object calling this method.
  */
 function speak(line) {
   console.log("The " + this.type + " rabbit says '" + line + "'") ;

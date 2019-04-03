@@ -37,5 +37,7 @@ for (i = 0; i < day1.events.length; i++)
 
 var descriptions = {
   work: "Went to work" ,
-  "touched tree": "Touched a tree"
+  touchedTree: "Touched a tree"
 };
+console.log(descriptions.work);
+console.log(descriptions.touchedTree);

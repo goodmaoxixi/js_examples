@@ -10,6 +10,11 @@ console.log("--- Everything is an object, even primitives ---");
 var myvar = "Travis"; // String
 console.log("The string length is " + myvar.length); // length is not a function
 
+/**
+ * Patterns are just as important as Syntax!
+ *   - http://addyosmani.com/resources/essentialjsdesignpatterns/book/
+ *   - https://shichuan.github.com/javascript-patterns/
+ */
 var obj = new Object; // OK
 //var obj = new Object(); // OK, too
 console.log("The data type is " + typeof(obj));
@@ -71,7 +76,8 @@ var MyClass = function() {
   console.log(this);
   this.first = 'Tom';
   this.last = 'Sawyer';
-  // The following is anti-pattern because it will be initialized every time MyClass is called. It cannot be inherited. Use the prototype instead.
+  // The following is anti-pattern because it will be initialized every time
+  // MyClass is called. It cannot be inherited. Use the prototype instead.
   //~ this.setName = function(_first, _last) {
 	//~ this.first = _frist;
 	//~ this.last = _last;
