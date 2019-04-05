@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <!--
+    Created on Fri Apr 5, 2019
+    https://square.github.io/intro-to-d3/data-binding/
+  -->
+  <head>
+    <title>Data Binding</title>    
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <h3>D3.JS Data Binding demo</h3>
+      See <a href="https://square.github.io/intro-to-d3/data-binding/">D3.JS Data Binding demo</a>
+    </div>
+
+    <div><svg></svg></div>
+    
+    <div>
+      <input type="button" name="remove" value="Remove Last Bar" 
+             onclick="javascript:remove()" />
+    </div>
+
+    <script type="text/javascript">
+      var sales = [
+        { product: 'Hoodie',  count: 7 },
+        { product: 'Jacket',  count: 6 },
+        { product: 'Snuggie', count: 9 },
+      ];
+
+      var svg = d3.select('svg');
+      console.log("The svg tag count: " + svg.size());
+      var rects = svg.selectAll('rect')
+                     .data(sales);
+      console.log("The rect count: " + rects.size());  
+
+      // Adding Elements selection.enter()
+      var newRects = rects.enter();
+      var maxCount = d3.max(sales, function(d, i) {
+        return d.count;
+      });
+
+      var x = d3.scaleLinear()
+                .range([0, 300])
+                .domain([0, maxCount]);
+      /* The following is obsolete.
+      var y = d3.scaleOrdinal()
+                .rangeRoundBands([0, 75])
+                .domain(sales.map(function(d, i) {
+                  return d.product;
+                })); */
+      var y = d3.scaleBand()
+                .domain(sales.map(function(d, i) {
+                  return d.product;
+                }))
+                .range([0, 75])
+                .paddingInner(0.1);
+
+      newRects.append('rect')
+              .attr('x', x(0))
+              .attr('y', function(d, i) {
+                return y(d.product);
+              })
+              .attr('height', y.bandwidth())
+              .attr('width', function(d, i) {
+                return x(d.count);
+              });
+
+      // Removing Elements selection.exit()
+      var remove = function() {
+        sales.pop(); // drops the last element
+
+        var rects = svg.selectAll('rect')
+                       .data(sales); // join the data again
+        var rectsToRemove = rects.exit();
+        console.log("Rect count to be removed: " +rectsToRemove.size());
+        // 1 -- one element is part of the exit selection
+        rectsToRemove.remove(); // instantly removes
+      };
+    </script>
+  </body>
+</html>
