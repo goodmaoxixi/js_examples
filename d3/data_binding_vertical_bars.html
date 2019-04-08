@@ -3,7 +3,7 @@
   <!--
     Created on Fri Apr 6, 2019
     https://square.github.io/intro-to-d3/data-binding/
-    The vertical bar version.
+    The colorful vertical bar version.
   -->
   <head>
     <title>Data Binding</title>    
@@ -12,7 +12,7 @@
 
   <body>
     <div>
-      <h3>D3.js Data Binding demo</h3>
+      <h3>D3.js Data Binding demo - Colorful vertical bars</h3>
       See <a href="https://square.github.io/intro-to-d3/data-binding/">Data Binding</a>
     </div>
 
@@ -55,7 +55,7 @@
                 .range([0, plotHeight]) // screen pixels
                 .domain([0, maxCount]); // source data
       
-      // The vertical bars
+      // The colorful vertical bars
       newRects.append('rect')
               .attr('x', function(d, i) { return x(d.product); })
               .attr('y', function(d) { return plotHeight - y(d.count); })

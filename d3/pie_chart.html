@@ -3,6 +3,8 @@
   <!--
     Created on Fri Apr 5, 2019
     https://square.github.io/intro-to-d3/examples/
+    See also: A simple pie chart in SVG
+     - https://hackernoon.com/a-simple-pie-chart-in-svg-dbdd653b6936
   -->
   <head>
     <title>Pie Chart</title>
@@ -34,10 +36,8 @@
       ];
 
       var pie = d3.pie()
-                  .value(function(d) {
-                    return d.count;
-                  });
-      var slices = pie(sales);
+                  .value(function(d) { return d.count; });
+      var slices = pie(sales); // data binding here?
       /* The result looks roughly like this:
       [
         {
@@ -76,9 +76,7 @@
        .append('path')
        .attr('class', 'slice')
        .attr('d', arc)
-       .attr('fill', function(d) {
-         return color(d.data.product);
-       });
+       .attr('fill', function(d) { return color(d.data.product); });
 
        // Adds the legends
 /*       
