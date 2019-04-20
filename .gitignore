@@ -8,3 +8,6 @@ module/node_modules
 
 *.log
 *.log.*
+
+# Folder on mac OS
+/.DS_Store
