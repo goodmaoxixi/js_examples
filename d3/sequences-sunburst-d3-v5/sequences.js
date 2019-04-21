@@ -19,7 +19,7 @@ var colors = {
 // Total size of all segments; we set this later, after loading the data.
 var totalSize = 0; 
 
-var vis = d3.select("#chart").append("svg:svg")
+var vis = d3.select("#chart").append("svg:svg") // namespace:tagname in XHTML
     .attr("width", width)
     .attr("height", height)
     .append("svg:g")
@@ -30,10 +30,14 @@ var partition = d3.partition()
     .size([2 * Math.PI, radius * radius]);
 
 var arc = d3.arc()
-    .startAngle(function(d) { return d.x0; })
-    .endAngle(function(d) { return d.x1; })
-    .innerRadius(function(d) { return Math.sqrt(d.y0); })
-    .outerRadius(function(d) { return Math.sqrt(d.y1); });
+    .startAngle(d => d.x0)
+    .endAngle(d => d.x1)
+    .innerRadius(d => Math.sqrt(d.y0))
+    .outerRadius(d => Math.sqrt(d.y1));
+    // .startAngle(function(d) { return d.x0; })
+    // .endAngle(function(d) { return d.x1; })
+    // .innerRadius(function(d) { return Math.sqrt(d.y0); })
+    // .outerRadius(function(d) { return Math.sqrt(d.y1); });
 
 // Use d3.text and d3.csvParseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
@@ -59,22 +63,27 @@ function createVisualization(json) {
 
   // Turn the data into a d3 hierarchy and calculate the sums.
   var root = d3.hierarchy(json)
-      .sum(function(d) { return d.size; })
-      .sort(function(a, b) { return b.value - a.value; });
+      .sum(d => d.size)
+      .sort((a, b) => { b.value - a.value });
+      // .sum(function(d) { return d.size; })
+      // .sort(function(a, b) { return b.value - a.value; });
   
   // For efficiency, filter nodes to keep only those large enough to see.
   var nodes = partition(root).descendants()
-      .filter(function(d) {
-          return (d.x1 - d.x0 > 0.005); // 0.005 radians = 0.29 degrees
-      });
+      .filter(d => (d.x1 - d.x0 > 0.005)); // 0.005 radians = 0.29 degrees
+      // .filter(function(d) {
+      //     return (d.x1 - d.x0 > 0.005); // 0.005 radians = 0.29 degrees
+      // });
 
   var path = vis.data([json]).selectAll("path")
       .data(nodes)
       .enter().append("svg:path")
-      .attr("display", function(d) { return d.depth ? null : "none"; })
+      .attr("display", d => (d.depth ? null : "none"))
+      //.attr("display", function(d) { return d.depth ? null : "none"; })      
       .attr("d", arc)
       .attr("fill-rule", "evenodd")
-      .style("fill", function(d) { return colors[d.data.name]; })
+      //.style("fill", function(d) { return colors[d.data.name]; })
+      .style("fill", d => colors[d.data.name])
       .style("opacity", 1)
       .on("mouseover", mouseover);
 
@@ -109,9 +118,10 @@ function mouseover(d) {
 
   // Then highlight only those that are an ancestor of the current segment.
   vis.selectAll("path")
-      .filter(function(node) {
-                return (sequenceArray.indexOf(node) >= 0);
-              })
+      .filter(node => (sequenceArray.indexOf(node) >= 0))
+      // .filter(function(node) {
+      //           return (sequenceArray.indexOf(node) >= 0);
+      //         })
       .style("opacity", 1);
 }
 
@@ -129,9 +139,10 @@ function mouseleave(d) {
       .transition()
       .duration(1000)
       .style("opacity", 1)
+      //.on("end", () => { d3.select(this).on("mouseover", mouseover); }); // buggy
       .on("end", function() {
               d3.select(this).on("mouseover", mouseover);
-            });
+      });
 
   d3.select("#explanation")
       .style("visibility", "hidden");
@@ -168,7 +179,8 @@ function updateBreadcrumbs(nodeArray, percentageString) {
   // Data join; key function combines name and depth (= position in sequence).
   var trail = d3.select("#trail")
       .selectAll("g")
-      .data(nodeArray, function(d) { return d.data.name + d.depth; });
+      .data(nodeArray, d => { d.data.name + d.depth; });
+      //.data(nodeArray, function(d) { return d.data.name + d.depth; });
 
   // Remove exiting nodes.
   trail.exit().remove();
