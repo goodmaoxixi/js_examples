@@ -4,9 +4,7 @@ var height = 600;
 var radius = Math.min(width, height) / 2;
 
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
-var b = {
-  w: 75, h: 30, s: 3, t: 10
-};
+var b = { w: 75, h: 30, s: 3, t: 10 };
 
 // Mapping of step names to colors.
 var colors = {
@@ -39,8 +37,8 @@ var arc = d3.arc()
 
 // Use d3.text and d3.csvParseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
-//d3.text("visit-sequences.csv", function(text) {      // v4
-  d3.text("visit-sequences.csv").then(function(text) { // v5
+//d3.text("visit-sequences.csv", function(text) {    // v4
+d3.text("visit-sequences.csv").then(function(text) { // v5
   var csv = d3.csvParseRows(text);
   var json = buildHierarchy(csv);
   createVisualization(json);
@@ -85,11 +83,10 @@ function createVisualization(json) {
 
   // Get total size of the tree = value of root node from partition.
   totalSize = path.datum().value;
- };
+};
 
 // Fade all but the current sequence, and show it in the breadcrumb trail.
 function mouseover(d) {
-
   var percentage = (100 * d.value / totalSize).toPrecision(3);
   var percentageString = percentage + "%";
   if (percentage < 0.1) {
@@ -120,7 +117,6 @@ function mouseover(d) {
 
 // Restore everything to full opacity when moving off the visualization.
 function mouseleave(d) {
-
   // Hide the breadcrumb trail
   d3.select("#trail")
       .style("visibility", "hidden");
