@@ -40,12 +40,34 @@ var arc = d3.arc()  // <-- 2
     .innerRadius(d => d.y0)
     .outerRadius(d => d.y1);
 
-// Putting it all together
-g.selectAll('path')                                // <-- 1
-    .data(root.descendants())                      // <-- 2
-    .enter()                                       // <-- 3
-    .append('path')                                // <-- 4
-    .attr("display", d => d.depth ? null : "none") // <-- 5
-    .attr("d", arc)                                // <-- 6
-    .style('stroke', '#fff')                       // <-- 7
-    .style("fill", d => color((d.children ? d : d.parent).data.name)); // <-- 8
+// Draw a Slice for Each Node
+g.selectAll('g')
+    .data(root.descendants())
+    .enter()
+    .append('g')
+    .attr("class", "node")
+    .append("path")
+    .attr("display", d => d.depth ? null : "none")
+    .attr("d", arc)
+    .style('stroke', '#fff')
+    .style("fill", d => color((d.children ? d : d.parent).data.name));
+
+// Add a Label for Each Node
+g.selectAll(".node")
+    .append("text")
+    .attr("transform", d => "translate(" + arc.centroid(d) + ")rotate("
+                             + computeTextRotation(d) + ")")
+    .attr("dx", "-20")
+    .attr("dy", ".5em")
+    .text(d => d.parent ? d.data.name : "");
+
+function computeTextRotation(d) {
+    var angle = (d.x0 + d.x1) / Math.PI * 90;  // <-- 1
+
+    // Avoid upside-down labels
+    // <--2 "labels aligned with slices"
+    return (angle < 90 || angle > 270) ? angle : angle + 180;
+
+    // Alternate label formatting
+    //return (angle < 180) ? angle - 90 : angle + 90;  // <-- 3 "labels as spokes"
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+  Created on Mon Apr 22 14:53:05 CST 2019
+
+  Sunburst Tutorial (d3 v4), Part 1
+  https://bl.ocks.org/denjn5/e1cdbbe586ac31747b4a304f8f86efa5
+-->
+<html>
+<head>
+  <title>Sunburst Tut01</title>
+  <meta charset="utf-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Raleway');
+    body {
+      font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    text { pointer-events: none; }  /* Make text "non selectable" */
+  </style>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+  <svg></svg>
+  <label>
+    <input class="sizeSelect" type="radio" name="mode" value="size" checked /> Size
+  </label>
+  <label>
+    <input class="sizeSelect" type="radio" name="mode" value="count" /> Count
+  </label>
+  
+  <script src="sunburst-tut03-d3-v4.js"></script>
+</body>
+</html>
