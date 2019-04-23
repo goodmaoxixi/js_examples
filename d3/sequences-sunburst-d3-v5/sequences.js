@@ -34,15 +34,11 @@ var arc = d3.arc()
     .endAngle(d => d.x1)
     .innerRadius(d => Math.sqrt(d.y0))
     .outerRadius(d => Math.sqrt(d.y1));
-    // .startAngle(function(d) { return d.x0; })
-    // .endAngle(function(d) { return d.x1; })
-    // .innerRadius(function(d) { return Math.sqrt(d.y0); })
-    // .outerRadius(function(d) { return Math.sqrt(d.y1); });
 
 // Use d3.text and d3.csvParseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
 //d3.text("visit-sequences.csv", function(text) {    // v4
-d3.text("visit-sequences.csv").then(function(text) { // v5
+d3.text("visit-sequences.csv").then(text => { // v5
   var csv = d3.csvParseRows(text);
   var json = buildHierarchy(csv);
   createVisualization(json);
@@ -64,25 +60,18 @@ function createVisualization(json) {
   // Turn the data into a d3 hierarchy and calculate the sums.
   var root = d3.hierarchy(json)
       .sum(d => d.size)
-      .sort((a, b) => { b.value - a.value });
-      // .sum(function(d) { return d.size; })
-      // .sort(function(a, b) { return b.value - a.value; });
+      .sort((a, b) => b.value - a.value);
   
   // For efficiency, filter nodes to keep only those large enough to see.
   var nodes = partition(root).descendants()
       .filter(d => (d.x1 - d.x0 > 0.005)); // 0.005 radians = 0.29 degrees
-      // .filter(function(d) {
-      //     return (d.x1 - d.x0 > 0.005); // 0.005 radians = 0.29 degrees
-      // });
 
   var path = vis.data([json]).selectAll("path")
       .data(nodes)
       .enter().append("svg:path")
-      .attr("display", d => (d.depth ? null : "none"))
-      //.attr("display", function(d) { return d.depth ? null : "none"; })      
+      .attr("display", d => d.depth ? null : "none")
       .attr("d", arc)
       .attr("fill-rule", "evenodd")
-      //.style("fill", function(d) { return colors[d.data.name]; })
       .style("fill", d => colors[d.data.name])
       .style("opacity", 1)
       .on("mouseover", mouseover);
@@ -102,26 +91,23 @@ function mouseover(d) {
     percentageString = "< 0.1%";
   }
 
-  d3.select("#percentage")
-      .text(percentageString);
+  d3.select("#percentage").text(percentageString);
 
-  d3.select("#explanation")
-      .style("visibility", "");
+  d3.select("#explanation").style("visibility", "");
 
   var sequenceArray = d.ancestors().reverse();
   sequenceArray.shift(); // remove root node from the array
   updateBreadcrumbs(sequenceArray, percentageString);
 
   // Fade all the segments.
-  d3.selectAll("path")
-      .style("opacity", 0.3);
+  d3.selectAll("path").style("opacity", 0.3);
 
   // Then highlight only those that are an ancestor of the current segment.
   vis.selectAll("path")
-      .filter(node => (sequenceArray.indexOf(node) >= 0))
-      // .filter(function(node) {
-      //           return (sequenceArray.indexOf(node) >= 0);
-      //         })
+      .filter(node => sequenceArray.indexOf(node) >= 0)
+      //.filter(function(node) {
+      //  return (sequenceArray.indexOf(node) >= 0);
+      //})
       .style("opacity", 1);
 }
 
@@ -179,8 +165,7 @@ function updateBreadcrumbs(nodeArray, percentageString) {
   // Data join; key function combines name and depth (= position in sequence).
   var trail = d3.select("#trail")
       .selectAll("g")
-      .data(nodeArray, d => { d.data.name + d.depth; });
-      //.data(nodeArray, function(d) { return d.data.name + d.depth; });
+      .data(nodeArray, d => d.data.name + d.depth);
 
   // Remove exiting nodes.
   trail.exit().remove();
@@ -264,7 +249,7 @@ function toggleLegend() {
 // root to leaf, separated by hyphens. The second column is a count of how 
 // often that sequence occurred.
 function buildHierarchy(csv) {
-  var root = {"name": "root", "children": []};
+  var root = {name: "root", children: []};
   for (var i = 0; i < csv.length; i++) {
     var sequence = csv[i][0];
     var size = +csv[i][1];
@@ -278,25 +263,25 @@ function buildHierarchy(csv) {
       var nodeName = parts[j];
       var childNode;
       if (j + 1 < parts.length) {
-   // Not yet at the end of the sequence; move down the tree.
-    var foundChild = false;
-    for (var k = 0; k < children.length; k++) {
-      if (children[k]["name"] == nodeName) {
-        childNode = children[k];
-        foundChild = true;
-        break;
-      }
-    }
-  // If we don't already have a child node for this branch, create it.
-    if (!foundChild) {
-      childNode = {"name": nodeName, "children": []};
-      children.push(childNode);
-    }
-    currentNode = childNode;
+        // Not yet at the end of the sequence; move down the tree.
+        var foundChild = false;
+        for (var k = 0; k < children.length; k++) {
+          if (children[k]["name"] == nodeName) {
+            childNode = children[k];
+            foundChild = true;
+            break;
+          }
+        }
+        // If we don't already have a child node for this branch, create it.
+        if (!foundChild) {
+          childNode = {name: nodeName, children: []};
+          children.push(childNode);
+        }
+        currentNode = childNode;
       } else {
-    // Reached the end of the sequence; create a leaf node.
-    childNode = {"name": nodeName, "size": size};
-    children.push(childNode);
+        // Reached the end of the sequence; create a leaf node.
+        childNode = {name: nodeName, size: size};
+        children.push(childNode);
       }
     }
   }
