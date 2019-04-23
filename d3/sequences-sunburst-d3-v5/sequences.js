@@ -4,16 +4,18 @@ var height = 600;
 var radius = Math.min(width, height) / 2;
 
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
-var b = { w: 75, h: 30, s: 3, t: 10 };
+var b = {
+  w: 75, h: 30, s: 3, t: 10
+};
 
 // Mapping of step names to colors.
 var colors = {
-  "home": "#5687d1",
-  "product": "#7b615c",
-  "search": "#de783b",
-  "account": "#6ab975",
-  "other": "#a173d1",
-  "end": "#bbbbbb"
+  home: "#5687d1",
+  product: "#7b615c",
+  search: "#de783b",
+  account: "#6ab975",
+  other: "#a173d1",
+  end: "#bbbbbb"
 };
 
 // Total size of all segments; we set this later, after loading the data.
@@ -175,19 +177,19 @@ function updateBreadcrumbs(nodeArray, percentageString) {
 
   entering.append("svg:polygon")
       .attr("points", breadcrumbPoints)
-      .style("fill", function(d) { return colors[d.data.name]; });
+      .style("fill", d => colors[d.data.name]);
 
   entering.append("svg:text")
       .attr("x", (b.w + b.t) / 2)
       .attr("y", b.h / 2)
       .attr("dy", "0.35em")
       .attr("text-anchor", "middle")
-      .text(function(d) { return d.data.name; });
+      .text(d => d.data.name);
 
   // Merge enter and update selections; set position for all nodes.
-  entering.merge(trail).attr("transform", function(d, i) {
-    return "translate(" + i * (b.w + b.s) + ", 0)";
-  });
+  entering.merge(trail).attr("transform", (d, i) =>
+    "translate(" + i * (b.w + b.s) + ", 0)"
+  );
 
   // Now move and update the percentage at the end.
   d3.select("#trail").select("#endlabel")
@@ -200,7 +202,6 @@ function updateBreadcrumbs(nodeArray, percentageString) {
   // Make the breadcrumb trail visible, if it's hidden.
   d3.select("#trail")
       .style("visibility", "");
-
 }
 
 function drawLegend() {
@@ -216,23 +217,21 @@ function drawLegend() {
   var g = legend.selectAll("g")
       .data(d3.entries(colors))
       .enter().append("svg:g")
-      .attr("transform", function(d, i) {
-              return "translate(0," + i * (li.h + li.s) + ")";
-           });
+      .attr("transform", (d, i) => "translate(0," + i * (li.h + li.s) + ")");
 
   g.append("svg:rect")
       .attr("rx", li.r)
       .attr("ry", li.r)
       .attr("width", li.w)
       .attr("height", li.h)
-      .style("fill", function(d) { return d.value; });
+      .style("fill", d => d.value);
 
   g.append("svg:text")
       .attr("x", li.w / 2)
       .attr("y", li.h / 2)
       .attr("dy", "0.35em")
       .attr("text-anchor", "middle")
-      .text(function(d) { return d.key; });
+      .text(d => d.key);
 }
 
 function toggleLegend() {
