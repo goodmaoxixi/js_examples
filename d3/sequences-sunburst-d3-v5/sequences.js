@@ -37,7 +37,7 @@ var arc = d3.arc()
 
 // Use d3.text and d3.csvParseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
-//d3.text("visit-sequences.csv", function(text) {    // v4
+//d3.text("visit-sequences.csv", function(text) { // v4
 d3.text("visit-sequences.csv").then(text => { // v5
   var csv = d3.csvParseRows(text);
   var json = buildHierarchy(csv);
@@ -125,7 +125,7 @@ function mouseleave(d) {
       .transition()
       .duration(1000)
       .style("opacity", 1)
-      //.on("end", () => { d3.select(this).on("mouseover", mouseover); }); // buggy
+      // .on("end", () => d3.select(this).on("mouseover", mouseover)); // buggy
       .on("end", function() {
               d3.select(this).on("mouseover", mouseover);
       });
@@ -218,7 +218,7 @@ function drawLegend() {
       .enter().append("svg:g")
       .attr("transform", function(d, i) {
               return "translate(0," + i * (li.h + li.s) + ")";
-           });
+      });
 
   g.append("svg:rect")
       .attr("rx", li.r)
