@@ -102,8 +102,8 @@
                           .domain(root)
                           .range(d3.schemeSet3);
 
-            root = d3.hierarchy(root);
-            root.sum(d => d.size);
+            root = d3.hierarchy(root)
+                     .sum(d => d.size);
 
             const slice = svg.selectAll('g.slice')
                 .data(partition(root).descendants());

@@ -17,20 +17,20 @@ var height = 500;
 var radius = Math.min(width, height) / 2;          // < -- 2
 var color = d3.scaleOrdinal(d3.schemeCategory20b); // <-- 3
 
-// Setting up our SVG workspace
+// Set up our SVG workspace
 var g = d3.select('svg')  // <-- 1
     .attr('width', width) // <-- 2
     .attr('height', height)
     .append('g')          // <-- 3
     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')'); // <-- 4
 
-// Formatting the Data
-var partition = d3.partition()     // <-- 1
-    .size([2 * Math.PI, radius]);  // <-- 2
+// Format the Data
+var partition = d3.partition()    // <-- 1
+    .size([2 * Math.PI, radius]); // <-- 2
 
 // Find the Root Node
-var root = d3.hierarchy(nodeData)  // <-- 1
-    .sum(d => d.size);             // <-- 2
+var root = d3.hierarchy(nodeData) // <-- 1
+    .sum(d => d.size);            // <-- 2
 
 // Calculate each arc
 partition(root);    // <-- 1, data binding
@@ -40,7 +40,7 @@ var arc = d3.arc()  // <-- 2
     .innerRadius(d => d.y0)
     .outerRadius(d => d.y1);
 
-// Putting it all together
+// Put it all together
 g.selectAll('path')                                // <-- 1
     .data(root.descendants())                      // <-- 2
     .enter()                                       // <-- 3
