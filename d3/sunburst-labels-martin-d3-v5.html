@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
-<!-- 20190429: There're bugs to fix! Fixed on 20190501.
-  Martin Etmajer’s Block 5480307
-  Updated March 31, 2019
-  http://bl.ocks.org/metmajer/5480307
+<!-- 20190501: Updated to D3 v5 on 20190501 by Guanglin Du.
+  Based on Martin Etmajer’s Block 5480307
+   - http://bl.ocks.org/metmajer/5480307
 
   See also Zoomable Sunburst on d3.js v4, Eduard Trott’s Block 5552606564ef37b5de7e47ed2b7dc099
   https://bl.ocks.org/maybelinot/5552606564ef37b5de7e47ed2b7dc099
 -->
 <head>
-  <title>Zoomable Sunburst with Labels</title>
+  <title>Sunburst w/ Labels, D3 v5</title>
   <meta charset="utf-8">
   <style>
     path {
@@ -22,11 +21,12 @@
       font-size: 12px;
     }
   </style>
-  <script src="d3.v4.min.js"></script>
+  <script src="d3.v5.min.js"></script>
 </head>
+
 <body>
-<h3>Zoomable Sunburst with Labels by <a href=" http://bl.ocks.org/metmajer/5480307">Martin Etmajer</a>. (D3 v4)</h3>
-<p><del>FIXME: Bugs to be fixed.</del> Fixed on 20190501.</p>
+<h3>Based on <a href=" http://bl.ocks.org/metmajer/5480307">Zoomable Sunburst with Labels byMartin Etmajer</a>. (D3 v4)</h3>
+<p>Upgraded to D3 v5 by Guanglin Du on 20190501.</p>
 
 <script>
   var width = 960,
@@ -37,7 +37,7 @@
 
   var y = d3.scaleSqrt().range([0, radius]);
 
-  var color = d3.scaleOrdinal(d3.schemeCategory20b);
+  //var color = d3.scaleOrdinal(d3.schemeCategory20b); // v4 only
   
   var partition = d3.partition();
 
@@ -60,9 +60,18 @@
 
   var text, path;
 
-  d3.json("flare.json", function(error, root) { // error root order in v4
+  var dataURL = "https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json";
+
+  //d3.json("flare.json").then(function(error, root) { // v5, cannot work
+  d3.json(dataURL).then(function(root, error) { // v5, works
     if (error) throw error;
-    //console.log(root);
+
+    console.log(root);
+
+    // D3 v5
+    var color = d3.scaleOrdinal()
+                  .domain(root)
+                  .range(d3.schemeSet3);
 
     root = d3.hierarchy(root)
              .sum(d => d.size);
@@ -131,14 +140,6 @@
             });
          }
       });
-  }
-
-  // Interpolate the scales!
-  function arcTween(d) {
-    var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
-        yd = d3.interpolate(y.domain(), [d.y0, 1]),
-        yr = d3.interpolate(y.range(), [d.y0 ? 20 : 0, radius]);
-    return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
   }
 
   function computeTextRotation(d) {

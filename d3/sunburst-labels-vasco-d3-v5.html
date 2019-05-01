@@ -95,8 +95,12 @@
             .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
             .on('click', () => focusOn()); // Reset zoom on canvas click
 
-        d3.json('https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json').then((root, error) => {
+        const dataURL = 'https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json';
+        d3.json(dataURL).then((root, error) => { // root, error order  in v5
+    
             if (error) throw error;
+    
+            console.log(root);
 
             var color = d3.scaleOrdinal()
                           .domain(root)

@@ -24,9 +24,7 @@
   <script src="d3.v3.min.js"></script>
 </head>
 <body>
-
-<h3>Zoomable Sunburst with Labels by <a href="http://bl.ocks.org/metmajer/5480307">Martin Etmajer</a>.</h3>
-<p>D3 v3</p>
+<h3>Zoomable Sunburst with Labels by <a href="http://bl.ocks.org/metmajer/5480307">Martin Etmajer</a>. (D3 v3)</h3>
 
 <script>
   var width = 960,
@@ -116,7 +114,11 @@
     return function(d, i) {
       return i
           ? function(t) { return arc(d); }
-          : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
+          : function(t) {
+              x.domain(xd(t));
+              y.domain(yd(t)).range(yr(t));
+              return arc(d);
+            };
     };
   }
 

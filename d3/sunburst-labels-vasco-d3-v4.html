@@ -96,7 +96,7 @@
             .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
             .on('click', () => focusOn()); // Reset zoom on canvas click
 
-        d3.json('https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json', (error, root) => {
+        d3.json('https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json', (error, root) => { // error root order in v4
             
             if (error) throw error;
 
@@ -168,8 +168,6 @@
                 .attrTween('display', d => () => textFits(d) ? null : 'none');
 
             moveStackToFront(d);
-
-            //
 
             function moveStackToFront(elD) {
                 svg.selectAll('.slice').filter(d => d === elD)

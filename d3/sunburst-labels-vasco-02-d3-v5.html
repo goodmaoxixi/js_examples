@@ -40,6 +40,7 @@
 <body>
   <h3>Zoomable Sunburst with Labels by <a href="https://bl.ocks.org/vasturiano/12da9071095fbd4df434e60d52d2d58d">Vasco Asturiano</a>.</h3>
   <p>Updated to D3 v5 on Mon Apr 29, 2019. Inline data.</p>
+  
   <script>
     var root = {name: "TOPICS", children: [{
         name: "Topic A",
@@ -110,8 +111,8 @@
                   .domain(root)
                   .range(d3.schemeSet3);
 
-    root = d3.hierarchy(root);
-    root.sum(d => d.size);
+    root = d3.hierarchy(root)
+             .sum(d => d.size);
 
     const slice = svg.selectAll('g.slice')
         .data(partition(root).descendants());
