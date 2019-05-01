@@ -25,7 +25,7 @@
 </head>
 
 <body>
-<h3>Based on <a href=" http://bl.ocks.org/metmajer/5480307">Zoomable Sunburst with Labels byMartin Etmajer</a>. (D3 v4)</h3>
+<h3>Based on <a href=" http://bl.ocks.org/metmajer/5480307">Zoomable Sunburst with Labels byMartin Etmajer (D3 v4)</a>.</h3>
 <p>Upgraded to D3 v5 by Guanglin Du on 20190501.</p>
 
 <script>
@@ -62,8 +62,8 @@
 
   var dataURL = "https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json";
 
-  //d3.json("flare.json").then(function(error, root) { // v5, cannot work
-  d3.json(dataURL).then(function(root, error) { // v5, works
+  d3.json("flare.json").then(function(root,error) { // v5, works!
+  //d3.json(dataURL).then(function(root, error) { // root, error order in v5
     if (error) throw error;
 
     console.log(root);
