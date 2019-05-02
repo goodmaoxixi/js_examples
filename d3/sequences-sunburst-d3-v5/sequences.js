@@ -129,7 +129,7 @@ function mouseleave(d) {
       .style("opacity", 1)
       // .on("end", () => d3.select(this).on("mouseover", mouseover)); // buggy
       .on("end", function() {
-              d3.select(this).on("mouseover", mouseover);
+          d3.select(this).on("mouseover", mouseover);
       });
 
   d3.select("#explanation")

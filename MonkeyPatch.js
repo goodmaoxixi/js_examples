@@ -1,14 +1,14 @@
 /**
  * Created on Sat Apr 6, 2019
+ * https://stackoverflow.com/questions/3010840/loop-through-an-array-in-javascript
  */
- // https://stackoverflow.com/questions/3010840/loop-through-an-array-in-javascript
  console.log("\n--- Loop over an ordinary array")
  var i, len, myStringArray = [ "Hello", "World" ];
 for (len = myStringArray.length, i = 0; i < len; ++i) {
   console.log(myStringArray[i]);
 }
 
-var x = [1,2,3,4].map(function(item) {
+var x = [1, 2, 3, 4].map(function(item) {
   return item * 10;
 });
 console.log(x);

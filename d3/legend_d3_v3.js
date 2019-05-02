@@ -1,7 +1,6 @@
 // d3.legend.js 
 // (C) 2012 ziggy.jonsson.nyc@gmail.com
 // MIT licence
-
 (function() {
 d3.legend = function(g) {
   g.each(function() {
@@ -25,7 +24,6 @@ d3.legend = function(g) {
 
     items = d3.entries(items).sort(function(a,b) { return a.value.pos-b.value.pos})
 
-    
     li.selectAll("text")
         .data(items,function(d) { return d.key})
         .call(function(d) { d.enter().append("text")})

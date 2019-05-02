@@ -62,8 +62,8 @@
 
   var dataURL = "https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json";
 
-  d3.json("flare.json").then(function(root,error) { // v5, works!
-  //d3.json(dataURL).then(function(root, error) { // root, error order in v5
+  //d3.json("flare.json").then(function(root,error) { // v5, works!
+  d3.json(dataURL).then(function(root, error) { // root, error order in v5
     if (error) throw error;
 
     console.log(root);

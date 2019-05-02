@@ -10,4 +10,4 @@ module/node_modules
 *.log.*
 
 # Folder on mac OS
-/.DS_Store
+.DS_Store

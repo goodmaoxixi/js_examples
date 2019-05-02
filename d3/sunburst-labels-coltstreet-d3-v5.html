@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<h3>Zoomable Sunburst with Labels D3 v5). Based on <a href="https://gist.github.com/COLTstreet/44d1bfec7edb0e60aacb35841f625e53">COLTstreet (D3 v4)</a>.</h3>
+<h3>Zoomable Sunburst with Labels (D3 v5). Based on <a href="https://gist.github.com/COLTstreet/44d1bfec7edb0e60aacb35841f625e53">COLTstreet (D3 v4)</a>.</h3>
 
 <script>
 var width = 960,
@@ -60,16 +60,18 @@ var svg = d3.select("body").append("svg")
 var text,
     path;
 
+// Loads data from the web, https only now.
 //var dataURL = "https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json";
-
 //d3.json(dataURL).then(function(root, error) { // root, error order in v5
-d3.json("flare.json").then(function(root, error) { // works
+
+// Loads local data from a file.
+d3.json("flare.json").then(function(root, error) {
   if (error) throw error;
 
-    // D3 v5
-    var color = d3.scaleOrdinal()
-                  .domain(root)
-                  .range(d3.schemeSet3);
+  // D3 v5
+  var color = d3.scaleOrdinal()
+                .domain(root)
+                .range(d3.schemeSet3);
   
   root = d3.hierarchy(root)
            .sum(function(d) { return d.size; });
