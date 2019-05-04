@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
   <!--
-    Created on Fri Apr 5, 2019
+    Created on Fri Apr 6, 2019
     https://square.github.io/intro-to-d3/data-binding/
+    The colorful vertical bar version.
   -->
   <head>
-    <title>Data Binding</title>    
-    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <title>Data Binding</title>
+    <meta charset="utf-8">       
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js">
+    </script>
   </head>
 
   <body>
     <div>
-      <h3>D3.js Data Binding demo</h3>
-      See <a href="https://square.github.io/intro-to-d3/data-binding/">Data Binding</a>
+      <h3>D3.js v4 Data Binding demo - Colorful vertical bars</h3>
+      <a href="https://square.github.io/intro-to-d3/data-binding/">
+        Data Binding
+      </a>
     </div>
 
     <div><svg></svg></div>
@@ -29,6 +34,11 @@
         { product: 'Snuggie', count: 9 },
       ];
 
+      // sets the plot parameters
+      //var barWidth = 20;
+      var colors = ['red', 'green', 'blue'];
+      var plotHeight = 300;
+
       var svg = d3.select('svg');
       console.log("The svg tag count: " + svg.size());
       var rects = svg.selectAll('rect')
@@ -41,32 +51,23 @@
         return d.count;
       });
 
-      var x = d3.scaleLinear()
-                .range([0, 300])        // screen pixels
-                .domain([0, maxCount]); // source data
-      /* The following is obsolete and incompatable.
-      var y = d3.scaleOrdinal()
-                .rangeRoundBands([0, 75])
-                .domain(sales.map(function(d, i) {
-                  return d.product;
-                })); */
-      var y = d3.scaleBand()
-                .domain(sales.map(function(d, i) {
-                  return d.product;
-                }))
+      // Recall that scales are functions that map from
+      // data space to screen space
+      var x = d3.scaleBand()
+                .domain(sales.map(function(d, i) { return d.product; }))
                 .range([0, 75])
                 .paddingInner(0.1);
+      var y = d3.scaleLinear()
+                .range([0, plotHeight]) // screen pixels
+                .domain([0, maxCount]); // source data
       
-      // The original horizontal bars
+      // The colorful vertical bars
       newRects.append('rect')
-              .attr('x', x(0))
-              .attr('y', function(d, i) {
-                return y(d.product);
-              })
-              .attr('height', y.bandwidth())
-              .attr('width', function(d, i) {
-                return x(d.count);
-              });
+              .attr('x', function(d, i) { return x(d.product); })
+              .attr('y', function(d) { return plotHeight - y(d.count); })
+              .attr('width', x.bandwidth())
+              .attr('height', function(d, i) { return y(d.count); })
+              .attr("fill", function(d, i) { return colors[i]; });
 
       // Removs elements with selection.exit()
       var remove = function() {

@@ -1,6 +1,7 @@
 /**
  * Created on May 27, 2015 Wed.
- * See Page 65 of Eloquent JavaScript, A Modern Introduction to Programming by Marijn Haverbeke
+ * See Page 65 of Eloquent JavaScript, A Modern Introduction to Programming by
+ * Marijn Haverbeke
  * Run with Node.js: node ./ObjectDemo.js
  *
  * Object in CoffeeScript <-> hash in Ruby <-> dictionary in Python.

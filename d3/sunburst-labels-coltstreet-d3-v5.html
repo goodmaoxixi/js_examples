@@ -60,6 +60,15 @@ var svg = d3.select("body").append("svg")
 var text,
     path;
 
+/**
+ * Working four methods to load data:
+ * (1) Inline data in json format (JS plain objects);
+ * (2) From an https URL, which works only afer allowing cross origin requests
+ *     on Firefox if the data URL is not the same as your app server;
+ * (3) From a local file;
+ * (4) Calling require()('@observablehq/flare') (observable-specific). In fact,
+ *     The same as (2).
+ */
 // Loads data from the web, https only now.
 //var dataURL = "https://gist.githubusercontent.com/mbostock/4348373/raw/85f18ac90409caa5529b32156aa6e71cf985263f/flare.json";
 //d3.json(dataURL).then(function(root, error) { // root, error order in v5
