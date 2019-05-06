@@ -39,7 +39,9 @@
       var colors = ['red', 'green', 'blue'];
       var plotHeight = 300;
 
-      var svg = d3.select('svg');
+      var svg = d3.select('svg')
+                  .attr('height', plotHeight);
+
       console.log("The svg tag count: " + svg.size());
       var rects = svg.selectAll('rect')
                      .data(sales); // data binding

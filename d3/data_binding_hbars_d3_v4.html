@@ -31,7 +31,11 @@
         { product: 'Snuggie', count: 9 },
       ];
 
-      var svg = d3.select('svg');
+      var svg = d3.select('svg')
+                  .attr('width', 300)
+                  .attr('height', 100);
+
+
       console.log("The svg tag count: " + svg.size());
       var rects = svg.selectAll('rect')
                      .data(sales); // data binding
