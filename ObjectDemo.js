@@ -11,6 +11,7 @@
  * https://www.youtube.com/watch?v=Bv_5Zv5c-Ts
  */
  // This kind of object is the first class object in JS
+console.log("--- Defines an Object"); 
 var day1 = {
   squirrel: false,
   events: ["work" , "touched tree", "pizza", "running", 65, "television"]
@@ -18,24 +19,25 @@ var day1 = {
 // Or define an object this way
 //var day1 = new Object();
 
-console.log(day1.squirrel);
-// → false
-
-console.log(day1.wolf);
-// → undefined
+console.log(day1.squirrel); // → false
+console.log(day1.wolf); // → undefined
 
 // Appends key wolf and its value
+console.log("\n--- Appends new name-value pair to an Object"); 
 day1.wolf = false;
 console.log(day1.wolf);
 // → false
 
 // Outputs the array
+console.log("\n--- Outputs the arry contained in an Object"); 
 console.log(day1.events);
 console.log(day1.events[0]);
 var i = 0;
-for (i = 0; i < day1.events.length; i++)
+for (i = 0; i < day1.events.length; i++) {
   console.log("%d, %s", i, day1.events[i]);
+}
 
+console.log("\n--- Defines a second Object"); 
 var descriptions = {
   work: "Went to work" ,
   touchedTree: "Touched a tree"
