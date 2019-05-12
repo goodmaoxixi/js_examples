@@ -1,3 +1,8 @@
+// Dimensions of sunburst.
+var width = window.innerWidth;
+var height = window.innerHeight;
+var radius = Math.min(width, height) / 2;
+    
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
 var b = {
   w: 75, h: 30, s: 3, t: 10
@@ -17,18 +22,12 @@ var colors = {
 var totalSize = 0; 
 
 var vis = d3.select("#chart").append("svg:svg") // namespace:tagname in XHTML
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", "0 0 7500 600")
-    .append("svg:g")
-    .classed("svg-content", true)
-    .attr("id", "container");
-
-// Dimensions of sunburst.
-var width = window.innerWidth;
-var height = window.innerHeight;
-var radius = Math.min(width, height) / 2;
-    
-vis.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            .style('width', '100vw')
+            .style('height', '100vh')
+            .classed("svg-content", true)
+            .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
+            .append("svg:g")
+            .attr("id", "container");
 
 var partition = d3.partition()
     .size([2 * Math.PI, radius * radius]);
@@ -85,6 +84,8 @@ function createVisualization(json) {
 
   // Get total size of the tree = value of root node from partition.
   totalSize = path.datum().value;
+
+  computeExplanationPosition();
 };
 
 // Fade all but the current sequence, and show it in the breadcrumb trail.
@@ -243,6 +244,12 @@ function toggleLegend() {
   } else {
     legend.style("visibility", "hidden");
   }
+}
+
+function computeExplanationPosition() {
+  d3.select("#explanation")
+    .style("top", width / 2 + "px")
+    .style("left", height / 2 + "px");
 }
 
 // Take a 2-column CSV and transform it into a hierarchical structure suitable
