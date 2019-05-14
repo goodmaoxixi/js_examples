@@ -1,8 +1,8 @@
 // Dimensions of sunburst.
 var width = window.innerWidth;
 var height = window.innerHeight;
-var radius = Math.min(width, height) / 2;
-    
+//var radius = Math.min(width, height) / 2;
+
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
 var b = {
   w: 75, h: 30, s: 3, t: 10
@@ -24,10 +24,15 @@ var totalSize = 0;
 var vis = d3.select("#chart").append("svg:svg") // namespace:tagname in XHTML
             .style('width', '100vw')
             .style('height', '100vh')
-            .classed("svg-content", true)
+            //.classed("svg-content", true)
             .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
             .append("svg:g")
             .attr("id", "container");
+
+var box = document.querySelector("div#chart.svg-container");
+var clientWidth = box.clientWidth;
+var clientHeight = box.clientHeight;
+var radius = Math.min(clientWidth, clientHeight) / 2;
 
 var partition = d3.partition()
     .size([2 * Math.PI, radius * radius]);
@@ -248,8 +253,8 @@ function toggleLegend() {
 
 function computeExplanationPosition() {
   d3.select("#explanation")
-    .style("top", width / 2 + "px")
-    .style("left", height / 2 + "px");
+    .style("top", clientWidth / 2 + "px")
+    .style("left", clientHeight / 2 + "px");
 }
 
 // Take a 2-column CSV and transform it into a hierarchical structure suitable
