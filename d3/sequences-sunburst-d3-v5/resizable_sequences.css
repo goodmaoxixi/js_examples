@@ -45,9 +45,7 @@ body {
 }
 
 #explanation {
-  position: relative;
-  top: 280px;
-  left: 535px;
+  position: absolute;
   width: 140px;
   text-align: center;
   color: #666;
