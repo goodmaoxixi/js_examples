@@ -27,7 +27,8 @@ var vis = d3.select("#chart").append("svg:svg") // namespace:tagname in XHTML
             //.classed("svg-content", true)
             .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
             .append("svg:g")
-            .attr("id", "container");
+            .attr("id", "container")
+            //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 var partition = d3.partition()
     .size([2 * Math.PI, radius * radius]);
