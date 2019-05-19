@@ -6,19 +6,27 @@ body {
   margin-top: 10px;
 }
 
-#svg-and-legend {
+#svg-legend-container {
   display: flex;
 }
 
 #chart {
   display: inline-block;
   stroke: #fff;
-  float: left;
-  width: 90%;  
 }
 
 #sidebar {
   display: inline-block;
-  float: right;
-  width:10%;
+}
+
+#explanation {
+  position: relative;
+  width: 140px;
+  text-align: center;
+  color: #666;
+  z-index: -1;
+}
+
+#percentage {
+  font-size: 2.5em;
 }

@@ -42,7 +42,7 @@ var arc = d3.arc()
 // Use d3.text and d3.csvParseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
 //d3.text("visit-sequences.csv", function(text) { // v4
-d3.text("visit-sequences.csv").then(text => { // v5
+d3.text("../data/visit-sequences.csv").then(text => { // v5
   var csv = d3.csvParseRows(text);
   var json = buildHierarchy(csv);
   createVisualization(json);
@@ -248,16 +248,17 @@ function toggleLegend() {
 }
 
 function computeExplanationPosition() {
-  var box = document.querySelector("div#chart.svg-container");
-  var clientWidth = box.clientWidth;
-  var clientHeight = box.clientHeight;
-  var radius = Math.min(clientWidth, clientHeight) / 2;
+  // var chartBox = document.querySelector("div#chart.svg-container");
+  // var legendBox = document.querySelector("div#sidebar");  
+  // var left = chartBox.clientWidth / 2 - legendBox.clientWidth;
+  // var top = chartBox.clientHeight / 2;
+  //var radius = Math.min(clientWidth, clientHeight) / 2;
+  var left = width / 2;
+  var top = height / 2;
 
   d3.select("#explanation")
-    .style("top", clientHeight / 2 + "px")
-    .style("left", clientWidth / 2 + "px");
-    //.style("top", "200px")
-    //.style("left", "350px");
+    .style("top", top + "px")
+    .style("left", left + "px");
 }
 
 // Take a 2-column CSV and transform it into a hierarchical structure suitable
