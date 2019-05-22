@@ -11,7 +11,8 @@ body {
 }
 
 #chart {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
   stroke: #fff;
 }
 

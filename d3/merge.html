@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+  Created on Wed May 22, 2019, to show how to use d3.merge.
+  (1) D3.js — merge() in depth
+   - https://medium.com/@bryony_17728/d3-js-merge-in-depth-a3069749a84f
+  (2) d3.js - merge a group of DOM objects
+   - https://bl.ocks.org/BMPMS/f1acde6c8d8d8339d6b638c9e47bc01a
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 24px;
+      color: #333;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+</head>
+<body>
+<div id="menu"><button onClick="doUpdate();">Update</button></div>
+<div id="chart_div"></div>
+
+<script>
+//define data - 4 different options to show changing order, elements missing in some
+var my_data = [];
+my_data[0] = [{id:"star",value:54,image:"star.png"},{id:"toad",value:104,image:"toad.png"},{id:"boo",value:24,image:"boo.png"}]
+my_data[1] = [{id:"star",value:124,image:"star.png"},{id:"toad",value:74,image:"toad.png"}]
+my_data[2] = [{id:"star",value:24,image:"star.png"},{id:"toad",value:194,image:"toad.png"},{id:"boo",value:124,image:"boo.png"}]
+my_data[3] = [{id:"toad",value:34,image:"toad.png"},{id:"boo",value:150,image:"boo.png"}]
+//define colour key and position
+var color_key = {"star":"yellow","boo":"blue","toad":"red"};
+var position = 0;
+
+//get window width and define fixed height
+var width = window.innerWidth || document.documentElement.clientWidth
+  || document.body.clientWidth;
+var height = 800;
+var margin = 20;
+
+//draw svg to screen width and height
+var svg = d3.select("#chart_div")
+            .append("svg")
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 " + width + " " + height)
+
+//define scales
+var x_scale = d3.scaleBand().range([0,width - (margin*2)]);
+var y_scale = d3.scaleLinear().range([0,height/2]);
+
+//run first update
+doUpdate();
+
+function doUpdate() {
+  //loop through data, reset scales and call update, then position.
+  if(position <= my_data.length){
+    var current_data = my_data[position];
+    
+    //find unique ids and max and reset scale domains
+    var ids = d3.set(current_data,function (d) { return d.id; }).values();
+    var max = d3.max(current_data,function(d) { return d.value; });
+    y_scale.domain([0,max]);
+    x_scale.domain(ids);
+
+    //sort data ascending by value
+    current_data = current_data.sort(function(a, b) {
+      return  d3.ascending(a.value, b.value);
+    });
+
+    //call update group and then position elements
+    var my_group = update_group(current_data);
+    position_elements(my_group);
+    position += 1;
+    if(position == my_data.length){
+      position = 0;
+    }
+  }
+}
+
+function update_group(data){
+  //join
+  var my_group = svg.selectAll('.chart_group')
+                   .data(data, function(d) { return d.id; });
+  //exit and remove
+  my_group.exit().remove();
+  //enter new groups
+  var enter = my_group.enter()
+                      .append("g")
+                      .attr("class","chart_group");
+
+  //append elements to new group
+  enter.append("rect").attr("class","group_rect");
+  enter.append("text").attr("class","group_text");
+  enter.append("image").attr("class","group_image");
+
+  //merge 
+  my_group = my_group.merge(enter);
+
+  return my_group;
+}
+
+function position_elements(my_group){
+  //position rectangle
+  my_group.select(".group_rect")
+   .attr("x", function(d){return x_scale(d.id)})
+   .attr("y", function(d){return (height/1.5) - y_scale(d.value)})
+   .attr("fill",function(d){return color_key[d.id]})
+   .attr("width",x_scale.bandwidth()-10)
+   .attr("height",function(d){return y_scale(d.value)});
+  //then position text
+  my_group.select(".group_text")
+  .attr("x", function(d){return x_scale(d.id) + ((x_scale.bandwidth()-10)/2) + 40})
+  .attr("y", function(d){return (height/1.55) - y_scale(d.value)})
+  .attr("text-anchor","end")
+  .text(function(d){return d.value});
+  //then position images
+  my_group.select(".group_image")
+  .attr("xlink:href", function(d){return d.image})
+  .attr("x", function(d){return x_scale(d.id) + ((x_scale.bandwidth()-10)/2) - 40})
+  .attr("y", function(d){return (height/1.55) - y_scale(d.value) - 30})
+  .attr("width",40)
+  .attr("height",40);
+};
+</script>
+</body>
+</html>
