@@ -112,17 +112,17 @@ function position_elements(my_group){
    .attr("height",function(d){return y_scale(d.value)});
   //then position text
   my_group.select(".group_text")
-  .attr("x", function(d){return x_scale(d.id) + ((x_scale.bandwidth()-10)/2) + 40})
-  .attr("y", function(d){return (height/1.55) - y_scale(d.value)})
-  .attr("text-anchor","end")
-  .text(function(d){return d.value});
+    .attr("x", function(d){return x_scale(d.id) + ((x_scale.bandwidth()-10)/2) + 40})
+    .attr("y", function(d){return (height/1.55) - y_scale(d.value)})
+    .attr("text-anchor","end")
+    .text(function(d){return d.value});
   //then position images
   my_group.select(".group_image")
-  .attr("xlink:href", function(d){return d.image})
-  .attr("x", function(d){return x_scale(d.id) + ((x_scale.bandwidth()-10)/2) - 40})
-  .attr("y", function(d){return (height/1.55) - y_scale(d.value) - 30})
-  .attr("width",40)
-  .attr("height",40);
+    .attr("xlink:href", function(d){return d.image})
+    .attr("x", function(d){return x_scale(d.id) + ((x_scale.bandwidth()-10)/2) - 40})
+    .attr("y", function(d){return (height/1.55) - y_scale(d.value) - 30})
+    .attr("width",40)
+    .attr("height",40);
 };
 </script>
 </body>
