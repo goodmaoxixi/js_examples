@@ -48,18 +48,6 @@
     </button>
   </div>
 
-  <div id="content-upate" class="content">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-
-  <div id="menu-udate">
-    <button onClick="doUpdate();">
-      Update existing elements
-    </button>
-  </div>
-
   <script>
     var myData = ['A', 'B', 'C', 'D', 'E'];
 
@@ -93,19 +81,6 @@
         .data(myData2) // update selection
         .exit()        // exit selection
         .remove();
-    }
-
-    function doUpdate() {
-      var u = d3.select('#content-update')
-        .selectAll('div')
-        .data(myData);
-
-      u.enter()
-        .append('div');
-
-      u.text(function(d) {
-        return d;
-      });
     }
   </script>
 </body>
