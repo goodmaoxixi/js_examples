@@ -1,14 +1,5 @@
-/*
- * Create on Tue 21, 2019
- * Use function responsivefy to resize.
- * FIXME: bugs when resizing!
- */
-// Dimensions of sunburst.
-//var width = window.innerWidth;
-//var height = window.innerHeight;
-var width = 800;
-var height = 600;
-var radius = Math.min(width, height) / 2;
+/* Create on Tue 21, 2019 */
+var width, height, radius, json, vis;
 
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
 var b = {
@@ -28,21 +19,6 @@ var colors = {
 // Total size of all segments; we set this later, after loading the data.
 var totalSize = 0; 
 
-var vis = d3.select("#chart").append("svg:svg") // namespace:tagname in XHTML
-            // .style('width', '100vw')
-            // .style('height', '100vh')
-            .attr('width', width)
-            .attr('height', height)
-            .call(responsivefy)
-            //.classed("svg-content", true)
-            //.attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
-            .append("svg:g")
-            .attr("id", "container")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-var partition = d3.partition()
-    .size([2 * Math.PI, radius * radius]);
-
 var arc = d3.arc()
     .startAngle(d => d.x0)
     .endAngle(d => d.x1)
@@ -54,12 +30,27 @@ var arc = d3.arc()
 //d3.text("visit-sequences.csv", function(text) { // v4
 d3.text("visit-sequences.csv").then(text => { // v5
   var csv = d3.csvParseRows(text);
-  var json = buildHierarchy(csv);
+  json = buildHierarchy(csv);
   createVisualization(json);
 });
 
 // Main function to draw and set up the visualization, once we have the data.
 function createVisualization(json) {
+  // Dimensions of sunburst.
+  width = window.innerWidth;
+  height = window.innerHeight;
+  radius = Math.min(width, height) / 2;
+
+  var partition = d3.partition()
+      .size([2 * Math.PI, radius * radius]);
+
+  vis = d3.select("#chart").append("svg:svg") // namespace:tagname in XHTML
+      .attr('width', width)
+      .attr('height', height)
+      .append("svg:g")
+      .attr("id", "container")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
   // Basic setup of page elements.
   initializeBreadcrumbTrail();
   drawLegend();
@@ -88,13 +79,16 @@ function createVisualization(json) {
       .attr("fill-rule", "evenodd")
       .style("fill", d => colors[d.data.name])
       .style("opacity", 1)
+    //.merge(path)
       .on("mouseover", mouseover);
-
-  // Add the mouseleave handler to the bounding circle.
-  d3.select("#container").on("mouseleave", mouseleave);
 
   // Get total size of the tree = value of root node from partition.
   totalSize = path.datum().value;
+
+  //path.exit().remove();
+
+  // Add the mouseleave handler to the bounding circle.
+  d3.select("#container").on("mouseleave", mouseleave);
 
   computeExplanationPosition();
 };
@@ -313,37 +307,11 @@ function buildHierarchy(csv) {
     }
   }
   return root;
-};
-
-function responsivefy(svg) {
-  // The container will be the DOM element the svg is appended to.
-  // We then measure the container and find its aspect ratio.
-  const container = d3.select(svg.node().parentNode),
-      width = parseInt(svg.style('width'), 10),
-      height = parseInt(svg.style('height'), 10),
-      aspect = width / height;
-      console.log(width + " * " + height);
-
-  // Add viewBox attribute and set its value to the initial size.
-  // Add preserveAspectRatio attribute to specify how to scale,
-  // and call resize so that svg resizes on inital page load.
-  svg.attr('viewBox', `0 0 ${width} ${height}`)
-    .attr('preserveAspectRatio', 'xMinYMid')
-    .call(resize);
-
-  // Add a listener so the chart will be resized when the window resizes.
-  // To register multiple listeners for same event type,
-  // you need to add namespace, i.e., 'click.foo'.
-  // Necessary if you invoke this function for multiple svgs.
-  // API docs: https://github.com/mbostock/d3/wiki/Selections#on
-  d3.select(window).on('resize.' + container.attr('id'), resize);
-
-  // This is the code that actually resizes the chart,
-  // and will be called on load and in response to window resize,
-  // gets the width of the container and proportionally resizes the svg to fit.
-  function resize() {
-      const targetWidth = parseInt(container.style('width'));
-      svg.attr('width', targetWidth);
-      svg.attr('height', Math.round(targetWidth / aspect));
-  }
 }
+
+// Redraw based on the new size whenever the browser window is resized.
+window.addEventListener("resize", function() {
+  console.log("Window resized: " + width + " * " + height);
+  d3.selectAll("svg").remove();
+  createVisualization(json);
+});
