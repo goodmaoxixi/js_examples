@@ -19,7 +19,7 @@
     </a>
   </div>
 
-  <div><svg></svg></div>
+  <div><svg id="chart" width="300" height="400"></svg></div>
   
   <div>
     <input type="button" name="remove" value="Remove Last Bar" 
@@ -28,7 +28,8 @@
 
   <script type="text/javascript">
     "user strict";
-    
+    var speed = 0;
+
     var sales = [
       { product: 'Hoodie',  count: 7 },
       { product: 'Jacket',  count: 6 },
@@ -36,14 +37,12 @@
     ];
 
     // sets the plot parameters
-    //var barWidth = 20;
     var colors = ['red', 'green', 'blue'];
-    var plotHeight = 300;
+    var margin = { top: 35, left: 35, bottom: 0, right: 0 };
 
-    var svg = d3.select('svg')
-                .attr('width', 100)
-                .attr('height', plotHeight);
-
+    var svg = d3.select('#chart');
+    var width = +svg.attr("width") - margin.left - margin.right;
+    var height = +svg.attr("height") - margin.top - margin.bottom;
 
     console.log("The svg tag count: " + svg.size());
     var rects = svg.selectAll('rect')
@@ -60,21 +59,32 @@
     // data space to screen space
     var x = d3.scaleBand()
               .domain(sales.map(function(d, i) { return d.product; }))
-              .range([0, 75])
+              .range([margin.left, width - margin.right])
               .paddingInner(0.1);
     var y = d3.scaleLinear()
-              .range([0, plotHeight]) // screen pixels
+              .range([height - margin.bottom, margin.top]) // screen pixels
               .domain([0, maxCount]); // source data
+
+    var xAxis = svg.append("g")
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .attr("class", "x-axis");
+
+    var yAxis = svg.append("g")
+      .attr("transform", `translate(${margin.left},0)`)
+      .attr("class", "y-axis");
+
+    svg.selectAll(".x-axis").transition().duration(speed)
+      .call(d3.axisBottom(x).tickSizeOuter(0));
+    svg.selectAll(".y-axis").transition().duration(speed)
+      .call(d3.axisLeft(y).ticks(null, "s"));
     
     // The colorful vertical bars
     newRects.append('rect')
             .attr('x', function(d, i) { return x(d.product); })
-            .attr('y', function(d) { return plotHeight - y(d.count); })
+            .attr('y', function(d) { return y(d.count); })
             .attr('width', x.bandwidth())
-            .attr('height', function(d, i) { return y(d.count); })
+            .attr('height', function(d, i) { return height - y(d.count); })
             .attr("fill", function(d, i) { return colors[i]; });
-
-    // Axis x
 
     // Removes elements with selection.exit()
     var remove = function() {
