@@ -1,0 +1,114 @@
+<html>
+<!--
+  Created on Tue Apr 28, 2019
+  Based on stacked_bar_robert_pettersson_d3_v5.html, which is from
+  https://bl.ocks.org/LemoNode/5a64865728c6059ed89388b5f83d6b67
+-->
+<head>
+  <title>Stacked Bar Chart</title>
+  <meta charset ="utf-8">
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <style>  
+    body {
+      margin: auto;
+      width: 650px;
+      font: 12px arial;
+    }
+  </style>
+</head>
+<body>
+<svg id="chart" width="650" height="400"></svg>
+
+<script>
+d3.csv("vlan_usage.csv").then(d => chart(d));
+
+function chart(csv) {
+  var keys = csv.columns.slice(2);
+  var year   = [...new Set(csv.map(d => d.year))];
+  var vlans = [...new Set(csv.map(d => d.vlan_name))];
+
+  var svg = d3.select("#chart"),
+    margin = {top: 35, left: 35, bottom: 0, right: 0},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+
+  var x = d3.scaleBand()
+    .range([margin.left, width - margin.right])
+    .padding(0.1);
+
+  var y = d3.scaleLinear()
+    .rangeRound([height - margin.bottom, margin.top]);
+
+  var xAxis = svg.append("g")
+    .attr("transform", `translate(0,${height - margin.bottom})`)
+    .attr("class", "x-axis");
+
+  var yAxis = svg.append("g")
+    .attr("transform", `translate(${margin.left},0)`)
+    .attr("class", "y-axis");
+
+  var z = d3.scaleOrdinal()
+    .range(["green", "red"]) // used, free
+    .domain(keys);
+
+  update(2019, 0);
+
+  function update(input, speed) {
+    var data = csv.filter(f => f.year == input)
+
+    data.forEach(function(d) {
+      d.ratio = d.free + "/" + d.used;
+      d.total = parseInt(d.free) + parseInt(d.used);
+      return d;
+    })
+
+    y.domain([0, d3.max(data, d => d3.sum(keys, k => +d[k]))]).nice();
+
+    svg.selectAll(".y-axis").transition().duration(speed)
+      .call(d3.axisLeft(y).ticks(null, "s"));
+
+    x.domain(data.map(d => d.vlan_name));
+
+    svg.selectAll(".x-axis").transition().duration(speed)
+      .call(d3.axisBottom(x).tickSizeOuter(0));
+
+    var group = svg.selectAll("g.layer")
+      .data(d3.stack().keys(keys)(data), d => d.key);
+
+    group.exit().remove();
+
+    group.enter().append("g")
+      .classed("layer", true)
+      .attr("fill", d => z(d.key));
+
+    var bars = svg.selectAll("g.layer").selectAll("rect")
+      .data(d => d, e => e.data.vlan_name);
+
+    bars.exit().remove();
+
+    bars.enter().append("rect")
+      .attr("width", x.bandwidth())
+      .merge(bars)
+    .transition().duration(speed)
+      .attr("x", d => x(d.data.vlan_name))
+      .attr("y", d => y(d[1]))
+      .attr("height", d => y(d[0]) - y(d[1]));
+
+    var text = svg.selectAll(".text")
+      .data(data, d => d.vlan_name);
+
+    text.exit().remove();
+
+    text.enter().append("text")
+      .attr("class", "text")
+      .attr("text-anchor", "middle")
+      .merge(text)
+    .transition().duration(speed)
+      .attr("x", d => x(d.vlan_name) + x.bandwidth() / 2)
+      .attr("y", d => y(d.total) - 5)
+      .text(d => d.ratio);
+  }
+}
+</script>
+</body>
+</html> 

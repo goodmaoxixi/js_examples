@@ -5,88 +5,88 @@
   The colorful vertical bar version.
 -->
 <html>
-  <head>
-    <title>Data Binding</title>
-    <meta charset="utf-8">       
-    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js">
-    </script>
-  </head>
-  <body>
-    <div>
-      <h3>D3.js v4 Data Binding demo - Colorful vertical bars</h3>
-      <a href="https://square.github.io/intro-to-d3/data-binding/">
-        Data Binding
-      </a>
-    </div>
+<head>
+  <title>Data Binding</title>
+  <meta charset="utf-8">       
+  <script type="text/javascript" src="https://d3js.org/d3.v5.min.js">
+  </script>
+</head>
+<body>
+  <div>
+    <h3>D3.js v4 Data Binding demo - Colorful vertical bars</h3>
+    <a href="https://square.github.io/intro-to-d3/data-binding/">
+      Data Binding
+    </a>
+  </div>
 
-    <div><svg></svg></div>
+  <div><svg></svg></div>
+  
+  <div>
+    <input type="button" name="remove" value="Remove Last Bar" 
+           onclick="javascript:remove()" />
+  </div>
+
+  <script type="text/javascript">
+    "user strict";
     
-    <div>
-      <input type="button" name="remove" value="Remove Last Bar" 
-             onclick="javascript:remove()" />
-    </div>
+    var sales = [
+      { product: 'Hoodie',  count: 7 },
+      { product: 'Jacket',  count: 6 },
+      { product: 'Snuggie', count: 9 },
+    ];
 
-    <script type="text/javascript">
-      "user strict";
-      
-      var sales = [
-        { product: 'Hoodie',  count: 7 },
-        { product: 'Jacket',  count: 6 },
-        { product: 'Snuggie', count: 9 },
-      ];
+    // sets the plot parameters
+    //var barWidth = 20;
+    var colors = ['red', 'green', 'blue'];
+    var plotHeight = 300;
 
-      // sets the plot parameters
-      //var barWidth = 20;
-      var colors = ['red', 'green', 'blue'];
-      var plotHeight = 300;
-
-      var svg = d3.select('svg')
-                  .attr('width', 100)
-                  .attr('height', plotHeight);
+    var svg = d3.select('svg')
+                .attr('width', 100)
+                .attr('height', plotHeight);
 
 
-      console.log("The svg tag count: " + svg.size());
+    console.log("The svg tag count: " + svg.size());
+    var rects = svg.selectAll('rect')
+                   .data(sales); // data binding
+    console.log("The rect count: " + rects.size());  
+
+    // Adds Elements with selection.enter()
+    var newRects = rects.enter();
+    var maxCount = d3.max(sales, function(d, i) {
+      return d.count;
+    });
+
+    // Recall that scales are functions that map from
+    // data space to screen space
+    var x = d3.scaleBand()
+              .domain(sales.map(function(d, i) { return d.product; }))
+              .range([0, 75])
+              .paddingInner(0.1);
+    var y = d3.scaleLinear()
+              .range([0, plotHeight]) // screen pixels
+              .domain([0, maxCount]); // source data
+    
+    // The colorful vertical bars
+    newRects.append('rect')
+            .attr('x', function(d, i) { return x(d.product); })
+            .attr('y', function(d) { return plotHeight - y(d.count); })
+            .attr('width', x.bandwidth())
+            .attr('height', function(d, i) { return y(d.count); })
+            .attr("fill", function(d, i) { return colors[i]; });
+
+    // Axis x
+
+    // Removes elements with selection.exit()
+    var remove = function() {
+      sales.pop(); // drops the last element
+
       var rects = svg.selectAll('rect')
-                     .data(sales); // data binding
-      console.log("The rect count: " + rects.size());  
-
-      // Adds Elements with selection.enter()
-      var newRects = rects.enter();
-      var maxCount = d3.max(sales, function(d, i) {
-        return d.count;
-      });
-
-      // Recall that scales are functions that map from
-      // data space to screen space
-      var x = d3.scaleBand()
-                .domain(sales.map(function(d, i) { return d.product; }))
-                .range([0, 75])
-                .paddingInner(0.1);
-      var y = d3.scaleLinear()
-                .range([0, plotHeight]) // screen pixels
-                .domain([0, maxCount]); // source data
-      
-      // The colorful vertical bars
-      newRects.append('rect')
-              .attr('x', function(d, i) { return x(d.product); })
-              .attr('y', function(d) { return plotHeight - y(d.count); })
-              .attr('width', x.bandwidth())
-              .attr('height', function(d, i) { return y(d.count); })
-              .attr("fill", function(d, i) { return colors[i]; });
-
-      // Axis x
-
-      // Removs elements with selection.exit()
-      var remove = function() {
-        sales.pop(); // drops the last element
-
-        var rects = svg.selectAll('rect')
-                       .data(sales); // join the data again
-        var rectsToRemove = rects.exit();
-        console.log("Rect count to be removed: " + rectsToRemove.size());
-        // 1 -- one element is part of the exit selection
-        rectsToRemove.remove(); // instantly removes
-      };
-    </script>
-  </body>
+                     .data(sales); // join the data again
+      var rectsToRemove = rects.exit();
+      console.log("Rect count to be removed: " + rectsToRemove.size());
+      // 1 -- one element is part of the exit selection
+      rectsToRemove.remove(); // instantly removes
+    };
+  </script>
+</body>
 </html>

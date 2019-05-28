@@ -1,5 +1,9 @@
 /* Create on Tue 21, 2019 */
-var width, height, radius, json, vis;
+  // Dimensions of sunburst.
+var width = window.innerWidth;
+var height = window.innerHeight;
+var radius = Math.min(width, height) / 2;
+var json, vis;
 
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
 var b = {
@@ -25,22 +29,8 @@ var arc = d3.arc()
     .innerRadius(d => Math.sqrt(d.y0))
     .outerRadius(d => Math.sqrt(d.y1));
 
-// Use d3.text and d3.csvParseRows so that we do not need to have a header
-// row, and can receive the csv as an array of arrays.
-//d3.text("visit-sequences.csv", function(text) { // v4
-d3.text("visit-sequences.csv").then(text => { // v5
-  var csv = d3.csvParseRows(text);
-  json = buildHierarchy(csv);
-  createVisualization(json);
-});
-
 // Main function to draw and set up the visualization, once we have the data.
 function createVisualization(json) {
-  // Dimensions of sunburst.
-  width = window.innerWidth;
-  height = window.innerHeight;
-  radius = Math.min(width, height) / 2;
-
   var partition = d3.partition()
       .size([2 * Math.PI, radius * radius]);
 
@@ -309,9 +299,24 @@ function buildHierarchy(csv) {
   return root;
 }
 
+/* Initailizes.
+   Use d3.text and d3.csvParseRows so that we do not need to have a header
+   row, and can receive the csv as an array of arrays. */
+d3.text("visit-sequences.csv").then(text => { // v5
+  var csv = d3.csvParseRows(text);
+  json = buildHierarchy(csv);
+  createVisualization(json);
+});
+
 // Redraw based on the new size whenever the browser window is resized.
+// window.innerWidth, document.documentElement.clientWidth,
+// document.body.clientWidth;
 window.addEventListener("resize", function() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  radius = Math.min(width, height) / 2;
   console.log("Window resized: " + width + " * " + height);
+
   d3.selectAll("svg").remove();
   createVisualization(json);
 });
