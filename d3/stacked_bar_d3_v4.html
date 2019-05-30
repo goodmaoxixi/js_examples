@@ -19,11 +19,18 @@
   </div>
 
   <div>
-    <svg class="stack"></svg>
+    <svg class="stack" width="400" height="200"></svg>
   </div>
 
   <script type="text/javascript">
     "user strict";
+
+    var speed = 0;
+
+    var margin = { top: 35, left: 35, bottom: 0, right: 0 };
+    var svg = d3.select('svg.stack');
+    var width = +svg.attr("width") - margin.left - margin.right;
+    var height = +svg.attr("height") - margin.top - margin.bottom;
           
     var sales = [
       { date: "2014-01-01", hoodies: 6, jackets: 2, snuggies: 3 },
@@ -34,9 +41,6 @@
     var stack = d3.stack()
                   .keys(["hoodies", "jackets", "snuggies"]);
     var stacked = stack(sales);
-
-    var height = 200;
-    var width = 200;
 
     // We need to calculate the maximum y-value across all our layers, so we
     // find the biggest end value.
@@ -56,8 +60,29 @@
                 return new Date(Date.parse(d.date));
               })).nice(4);
 
-    var svg = d3.select('svg.stack');
     var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    var xAxis = svg.append("g")
+      .attr("transform", `translate(${margin.left},${height - margin.bottom})`)
+      .attr("class", "x-axis");
+
+    var yAxis = svg.append("g")
+      .attr("transform", `translate(${margin.left},0)`)
+      .attr("class", "y-axis");
+
+    svg.selectAll(".x-axis").transition().duration(speed)
+      .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d")));
+      // .append("text")
+      // .attr("x", width / 2)
+      // .attr("y", margin.bottom * 0.9)
+      // .attr("dx", "0.32em")
+      // .attr("fill", "#000")
+      // .attr("font-weight", "bold")
+      // .attr("text-anchor", "start")
+      // .text("YYYY-MM-DD Format");
+
+    svg.selectAll(".y-axis").transition().duration(speed)
+      .call(d3.axisLeft(y).ticks(null, "s"));
 
     // Binds a <g> tag for each layer
     var layers = svg.selectAll('g.layer')
