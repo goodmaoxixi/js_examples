@@ -28,7 +28,7 @@ function chart(csv) {
   var vlans = [...new Set(csv.map(d => d.vlan_name))];
 
   var svg = d3.select("#chart"),
-    margin = {top: 35, left: 35, bottom: 0, right: 0},
+    margin = {top: 35, left: 35, bottom: 35, right: 35},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
 

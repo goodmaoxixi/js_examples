@@ -59,21 +59,21 @@
     // Recall that scales are functions that map from
     // data space to screen space
     var x = d3.scaleBand()
-              .domain(sales.map(function(d, i) { return d.product; })) // source data
-              .range([margin.left, width + margin.left]) // screen pixels
+              .domain(sales.map(function(d, i) { return d.product; }))
+              .range([margin.left, width + margin.left])
               .paddingInner(0.1);
     var y = d3.scaleLinear()
-              .range([margin.top, height + margin.top])
-              .domain([0, maxCount]);
+              .range([height + margin.top, margin.top]) // screen pixels
+              .domain([0, maxCount]); // source data
 
     var xAxis = svg.append("g")
-      .attr("transform", `translate(0,${height+margin.top})`)
+      .attr("transform", `translate(0, ${height + margin.top})`)
       .attr("class", "x-axis");
     svg.selectAll(".x-axis").transition().duration(speed)
       .call(d3.axisBottom(x).tickSizeOuter(0));
 
     var yAxis = svg.append("g")
-      .attr("transform", `translate(${margin.left},0)`)
+      .attr("transform", `translate(${margin.left}, 0)`)
       .attr("class", "y-axis");
     svg.selectAll(".y-axis").transition().duration(speed)
       .call(d3.axisLeft(y).ticks(null, "s"));
@@ -81,9 +81,11 @@
     // The colorful vertical bars
     newRects.append('rect')
             .attr('x', function(d, i) { return x(d.product); })
-            .attr('y', function(d) { return height - y(d.count); })
+            .attr('y', function(d) { return y(d.count); })
             .attr('width', x.bandwidth())
-            .attr('height', function(d, i) { return y(d.count); })
+            .attr('height', function(d, i) {
+              return height + margin.top - y(d.count);
+            })
             .attr("fill", function(d, i) { return colors[i]; });
 
     // Removes elements with selection.exit()
