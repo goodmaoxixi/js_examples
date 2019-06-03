@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+  Created on Mon Jun 3, 2019
+  Rotated axis labels in v4, d3noob’s Block 3c040800ff6457717cca586ae9547dbf
+  https://bl.ocks.org/d3noob/3c040800ff6457717cca586ae9547dbf
+-->
 <head>
   <meta charset="utf-8">
   <style>
@@ -13,6 +18,10 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 <body>
+<div><h4>Rotated axis labels in D3 v4 by d3noob</h4></div>
+
+<div id="chart"></div>
+
 <script>
 // set the dimensions and margins of the graph
 var margin = {top: 20, right: 20, bottom: 70, left: 50},
@@ -31,10 +40,10 @@ var valueline = d3.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.close); });
 
-// append the svg obgect to the body of the page
+// append the svg obgect to the chart div of the page
 // appends a 'group' element to 'svg'
 // moves the 'group' element to the top left margin
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

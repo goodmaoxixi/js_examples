@@ -75,8 +75,6 @@ function chart(csv) {
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
-        // .attr("transform", "translate(" + (width/2) + " ," + 
-        //                    (height + margin.top + 20) + ")")        
         .attr("transform", "rotate(-65)");
 
     var group = svg.selectAll("g.layer")
@@ -111,8 +109,16 @@ function chart(csv) {
       .attr("text-anchor", "middle")
       .merge(text)
     .transition().duration(speed)
-      .attr("x", d => x(d.vlan_name) + x.bandwidth() / 2)
-      .attr("y", d => y(d.total) - 5)
+      .style("fill", "black")
+      .style("font-size", "12px")
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d, i) {
+        return "translate(" + (x(d.vlan_name) + x.bandwidth() / 2)
+               + "," + (y(d.total) - 25) + ") " + "rotate(-70)";
+      })
+      // .attr("x", d => x(d.vlan_name) + x.bandwidth() / 2)
+      // .attr("y", d => y(d.total) - 5)
       .text(d => d.ratio);
   }
 }
