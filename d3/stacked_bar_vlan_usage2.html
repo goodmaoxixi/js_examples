@@ -5,7 +5,7 @@
   https://bl.ocks.org/LemoNode/5a64865728c6059ed89388b5f83d6b67
 -->
 <head>
-  <title>VLAN Usage 1</title>
+  <title>VLAN Usage 2</title>
   <meta charset ="utf-8">
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <style>  
@@ -18,7 +18,7 @@
 </head>
 <body>
 <div>
-  <h4>Simulate addresses usage in VLANs (Arrow function version)</h4>
+  <h4>Simulate addresses usage in VLANs 2 (Without arrow function)</h4>
 </div>
 
 <div>
@@ -59,7 +59,7 @@ function chart(csv) {
 
   var colors = {used: "green", free: "red"};
   var z = d3.scaleOrdinal()
-    .range(Object.values(colors)) // ["green", "red"], used, free
+    .range(Object.values(colors)) // used, free
     .domain(keys);
 
   update(csv, 0);
@@ -73,38 +73,41 @@ function chart(csv) {
       return d;
     })
 
-    y.domain([0, d3.max(data, d => d.total)]).nice(); // source data
+    y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
 
     svg.selectAll(".y-axis").transition().duration(speed)
       .call(d3.axisLeft(y).ticks(null, "s"));
 
     data.sort(d3.select("#vlan-sort").property("checked")
-      ? (a, b) => b.total - a.total
-      : (a, b) => vlans.indexOf(a.vlan_name) - vlans.indexOf(b.vlan_name));
-    
+      ? function(a, b) { return b.total - a.total; }
+      : function(a, b) {
+          return vlans.indexOf(a.vlan_name) - vlans.indexOf(b.vlan_name);
+        });
+
     // console.log(data);
 
-    x.domain(data.map(d => d.vlan_name));
+    x.domain(data.map(function(d) { return d.vlan_name; }));
 
     svg.selectAll(".x-axis").transition().duration(speed)
       .call(d3.axisBottom(x).tickSizeOuter(0))
       .selectAll("text")  
         .style("text-anchor", "end")
+        .style("font-size", "12px")        
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("transform", "rotate(-65)");
 
     var group = svg.selectAll("g.layer")
-      .data(d3.stack().keys(keys)(data), d => d.key);
+      .data(d3.stack().keys(keys)(data), function(d) { return d.key; });
 
     group.exit().remove();
 
     group.enter().append("g")
       .classed("layer", true)
-      .attr("fill", d => z(d.key));
+      .attr("fill", function(d) { return z(d.key); });
 
     var bars = svg.selectAll("g.layer").selectAll("rect")
-      .data(d => d, e => e.data.vlan_name);
+      .data(function(d) { return d; }, function(e) { return e.data.vlan_name; });
 
     bars.exit().remove();
 
@@ -112,12 +115,12 @@ function chart(csv) {
       .attr("width", x.bandwidth())
       .merge(bars)
     .transition().duration(speed)
-      .attr("x", d => x(d.data.vlan_name))
-      .attr("y", d => y(d[1]))
-      .attr("height", d => y(d[0]) - y(d[1]));
+      .attr("x", function(d) { return x(d.data.vlan_name); })
+      .attr("y", function(d) { return y(d[1]); })
+      .attr("height", function(d) { return y(d[0]) - y(d[1]); });
 
     var text = svg.selectAll(".text")
-      .data(data, d => d.vlan_name);
+      .data(data, function(d) { return d.vlan_name; });
 
     text.exit().remove();
 
@@ -132,11 +135,9 @@ function chart(csv) {
       .attr("text-anchor", "middle")
       .attr("transform", function(d, i) {
         return "translate(" + (x(d.vlan_name) + x.bandwidth() / 2)
-               + "," + (y(d.total) - 30) + ") " + "rotate(-75)";
+               + "," + (y(d.total) - 30) + ") " + "rotate(-70)";
       })
-      // .attr("x", d => x(d.vlan_name) + x.bandwidth() / 2)
-      // .attr("y", d => y(d.total) - 5)
-      .text(d => d.ratio);
+      .text(function(d) { return d.ratio; });
   }
 
   var checkbox = d3.select("#vlan-sort")
@@ -175,7 +176,7 @@ function chart(csv) {
      .attr("dy", "0.35em")
      .attr("text-anchor", "middle")
      .text(function(d) { return d.key; });
-  }    
+  }
 }
 </script>
 </body>

@@ -16,13 +16,15 @@
   </style>
 </head>
 <body>
+  <div><h4>Stacked bar chart with D3 v5 by Robert Pettersson</h4></div>
+
   <svg id="chart" width="650" height="400"></svg>
 
   Select year: 
   <select id="year"></select>
 
-  <input type="checkbox" id="sort"> 
-  Toggle sort 
+  <input type="checkbox" id="sort">
+  Toggle sort
 
 <script>
 d3.csv("data_robert_pettersson.csv").then(d => chart(d));
