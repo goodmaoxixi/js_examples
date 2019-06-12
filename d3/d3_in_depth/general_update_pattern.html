@@ -50,20 +50,20 @@
     /*
      * The basic principle follows 3 steps to use merge:
      * 1. join the data;
-     * 2. exit, remove to get rid of any redundant DOM elements;
-     * 3. enter, append, merge the DOM elements.
+     * 2. enter, append and merge the DOM elements;
+     * 3. exit, remove to get rid of any redundant DOM elements.     
      */
     function update(data) {
       var u = d3.select('#content')
-        .selectAll('div')
-        .data(data); // update selection
+                .selectAll('div')
+                .data(data); // update selection
 
       u.enter()
-        .append('div') // adding
-        .merge(u) // update existing and entering elements 
-        .text(function(d) {
-          return d;
-        });
+       .append('div') // adding
+       .merge(u) // update existing and entering elements 
+       .text(function(d) {
+         return d;
+       });
 
       u.exit().remove(); // removing
     }
