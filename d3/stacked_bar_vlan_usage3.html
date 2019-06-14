@@ -23,7 +23,7 @@
   </h4>
 </div>
 
-<div id="chart-div">
+<div id="lan-chart-div">
   <svg id="lan-chart" height="400"></svg>
 </div>
 
@@ -38,7 +38,7 @@ function chart(csv) {
   // Dimensions of legend item: width, height, spacing, radius of rounded rect
   var li = {w: 75, h: 30, s: 3, r: 3};
 
-  var chartDiv = document.getElementById("chart-div");
+  var chartDiv = document.getElementById("lan-chart-div");
   var svg = d3.select("#lan-chart")
               .attr("width", chartDiv.clientWidth);
   var margin = {top: 35, left: 35, bottom: 80, right: 35};
@@ -96,8 +96,6 @@ function chart(csv) {
           return vlans.indexOf(a.vlan_name) - vlans.indexOf(b.vlan_name);
         });
 
-    // console.log(data);
-
     x.domain(data.map(function(d) { return d.vlan_name; }));
 
     svg.selectAll(".x-axis").transition().duration(speed)
@@ -153,7 +151,7 @@ function chart(csv) {
   }
 
   var checkbox = d3.select("#vlan-sort")
-    .on("click", function() {
+                   .on("click", function() {
       update(csv, 750);
     });
 
@@ -195,14 +193,18 @@ function chart(csv) {
 
   // Redraws the stacked bar chart after the window resizes.
   function updateClientWidth() {
-    chartDiv = document.getElementById("lan-chart");
-    width = chartDiv.clientWidth - margin.left - margin.right;
-
-    svg = d3.select("#lan-bar-chart-legend")
-            .attr("width", chartDiv.clientWidth);
+    //  chartDiv = document.getElementById("lan-chart-div");
+    // width = chartDiv.clientWidth - margin.left - margin.right;
+    svg = d3.select("#lan-chart")
+            .attr("width", window.innerWidth);
+    width = window.innerWidth - margin.left - margin.right;    
+    // console.log(width);
 
     update(csv, 750);
-    drawLegend();    
+
+    div_legend = d3.select("#lan-bar-chart-legend")
+                   .attr("width", window.innerWidth);
+    drawLegend();
   }
 }
 </script>

@@ -66,6 +66,8 @@ function chart(csv) {
 
   drawLegend();
 
+  window.addEventListener("resize", updateClientWidth);
+
   function update(data, speed) {
     data.forEach(function(d) {
       d.ratio = d.free + "/" + d.used;
@@ -177,6 +179,12 @@ function chart(csv) {
      .attr("text-anchor", "middle")
      .text(function(d) { return d.key; });
   }
+
+  // Redraws the stacked bar chart after the window resizes.
+  function updateClientWidth() {
+    // Empty implementation
+    console.log("Window resized");
+  }  
 }
 </script>
 </body>
