@@ -109,9 +109,9 @@ function chart(csv) {
     bars.exit().remove();
 
     bars.enter().append("rect")
-      .attr("width", x.bandwidth())
       .merge(bars)
     .transition().duration(speed)
+      .attr("width", x.bandwidth())
       .attr("x", d => x(d.data.vlan_name))
       .attr("y", d => y(d[1]))
       .attr("height", d => y(d[0]) - y(d[1]));

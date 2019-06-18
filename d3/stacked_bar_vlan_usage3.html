@@ -47,6 +47,7 @@ function chart(csv) {
   var keys = csv.columns.slice(1);
   var vlans = [...new Set(csv.map(d => d.vlan_name))];
 
+  var x;
   var y = d3.scaleLinear()
     //.range([height + margin.top, margin.top]); // screen pixels
     .rangeRound([height + margin.top, margin.top]);
@@ -81,9 +82,9 @@ function chart(csv) {
       return d;
     })
 
-    var x = d3.scaleBand()
-              .range([margin.left, width + margin.left])
-              .padding(0.1);
+    x = d3.scaleBand()
+          .range([margin.left, width + margin.left])
+          .padding(0.1);
     y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
 
     svg.selectAll(".y-axis").transition().duration(speed)
@@ -120,10 +121,10 @@ function chart(csv) {
 
     bars.exit().remove();
 
-    bars.enter().append("rect")
-      .attr("width", x.bandwidth())
+    bars.enter().append("rect")      
       .merge(bars)
     .transition().duration(speed)
+      .attr("width", x.bandwidth())
       .attr("x", function(d) { return x(d.data.vlan_name); })
       .attr("y", function(d) { return y(d[1]); })
       .attr("height", function(d) { return y(d[0]) - y(d[1]); });
@@ -192,13 +193,9 @@ function chart(csv) {
 
   // Redraws the stacked bar chart after the window resizes.
   function updateClientWidth() {
-    //  chartDiv = document.getElementById("lan-chart-div");
-    // width = chartDiv.clientWidth - margin.left - margin.right;
     svg = d3.select("#lan-chart")
-            .attr("width", window.innerWidth);
-    width = window.innerWidth - margin.left - margin.right;    
-    // console.log(width);
-
+              .attr("width", chartDiv.clientWidth);
+    width = +svg.attr("width") - margin.left - margin.right;
     update(csv, 750);
 
     div_legend = d3.select("#lan-bar-chart-legend")
