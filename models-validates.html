@@ -1,0 +1,23 @@
+validates :mac_address, length: { is: 14 }, format: { with: /[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}/,
+    message: "only allows XXXX-XXXX-XXXX" }
+	
+	
+	
+	
+	 if str_mac.length == 14, 
+	   if  str_mac.at(4) == "-", str_mac.save
+	   else str_mac = str_mac.from[0][3] - str_mac.from[5][8] - str_mac.from[10][13] 
+	   end
+	 
+	 
+	 else
+	 if length == 17, 
+	   if  str_mac.at(2) == "-", str_mac.save
+	   else str_mac = str_mac.from[0][1]+str_mac.from[3][4] - str_mac.from[6][7]+str_mac.from[9][10] - str_mac.from[12][13]+str_mac.from[15][16]	 
+	   end
+       end	   
+	   
+	   
+	   
+	   
+	   
