@@ -1,5 +1,5 @@
 /**
- * Create on May 30, 2015 Sat.
+ * Created on May 30, 2015 Sat.
  * Run with Node.js: node ./OperatorDot.js
  *
  * Shows how to use member operator . in objects.

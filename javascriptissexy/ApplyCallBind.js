@@ -1,9 +1,11 @@
 /**
- * Create on Jun. 20, 2015 Sat.
- * Examples from an excellent website on JS: http://javascriptissexy.com/ by  Richard Bovell.
+ * Created on Jun. 20, 2015 Sat.
+ * Examples from an excellent website on JS: http://javascriptissexy.com/
+ * by  Richard Bovell.
  * Run in Node.js: node ./ApplyCallBind.js
  * 
- * JavaScript’s Apply, Call, and Bind Methods are Essential for JavaScript Professionals
+ * JavaScript’s Apply, Call, and Bind Methods are Essential for
+ * JavaScript Professionals
  * http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/
  */
 console.log("--- 1. JavaScript’s Bind Allows Us to Set the this Value on Methods ---");
@@ -143,7 +145,13 @@ console.log(clientData.fullName); // Barack Obama​
 console.log("\n5. --- Borrowing Functions with Apply and Call (A Must Know) ---");
 console.log("5.1 *** Borrowing Array Methods");
 // An array-like object: note the non-negative integers used as keys​
-var anArrayLikeObj = {0: "Martin", 1: 78, 2: 67, 3: ["Letta", "Marieta", "Pauline"], length: 4 };
+var anArrayLikeObj = {
+  0: "Martin",
+  1: 78,
+  2: 67,
+  3: ["Letta", "Marieta", "Pauline"],
+  length: 4
+};
 
 // Make a quick copy and save the results in a real array:​
 // First parameter sets the "this" value​
@@ -151,10 +159,12 @@ var newArray = Array.prototype.slice.call(anArrayLikeObj, 0);
 console.log(newArray); // ["Martin", 78, 67, Array[3]]​
 
 // Search for "Martin" in the array-like object​
-console.log(Array.prototype.indexOf.call(anArrayLikeObj, "Martin") === -1 ? false : true); // true​
+console.log(Array.prototype.indexOf.call(anArrayLikeObj, "Martin") === -1 ? false : true);
+// true​
 
 // Try using an Array method without the call() or apply()​
-//console.log(anArrayLikeObj.indexOf("Martin") === -1 ? false : true); // Error: Object has no method 'indexOf'​
+//console.log(anArrayLikeObj.indexOf("Martin") === -1 ? false : true);
+// Error: Object has no method 'indexOf'​
 
 // Reverse the object:​
 console.log(Array.prototype.reverse.call(anArrayLikeObj));
@@ -185,8 +195,10 @@ function transitionTo(name) {
 // Because the slice method copied from index 1 to the end, the first item "contact" was not returned​
 transitionTo("contact", "Today", "20"); // ["Today", "20"]​
 
-//From this example, we learn that a quick way to get all the arguments (as an array) passed to a function is to do:
-// We do not define the function with any parameters, yet we can get all the arguments passed to it​
+//From this example, we learn that a quick way to get all the arguments
+// (as an array) passed to a function is to do:
+// We do not define the function with any parameters, yet we can get all
+// the arguments passed to it​
 function doSomething() {
   var args = Array.prototype.slice.call(arguments);
   console.log(args);

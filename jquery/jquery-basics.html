@@ -1,10 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
   <!-- See http://learn.jquery.com/using-jquery-core/document-ready/ -->
+<head>
+  <title>Demo</title>
+  <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <script type="text/JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>  
-  <title>Demo</title>
   <style>
     a.test {
       font-weight: bold;
@@ -13,29 +14,70 @@
 </head>
 
 <body>
-  <a href="http://jquery.com/">jQuery</a>
+  <a href="http://jquery.com/" id="main_anchor">jQuery</a>
+  
+  <p><a href="http://learn.jquery.com/using-jquery-core/traversing/">Traversing</a></p>
+  <div class="grandparent">
+	<p>Grand Parent</p>
+    <div class="parent">
+      <p>Parent</p>
+      <div class="child">
+		<p>Child</p>
+        <span class="subchild"></span>
+      </div>
+    </div>
+    <div class="surrogateParent1"><p>surrogateParent1</p></div>
+    <div class="surrogateParent2"><p>surrogateParent2</p></div>
+  </div>
+  
+  <div>
+    <button id="test_method_data"
+        data-model="model"
+        data-array="[0, 1, 2, 3]"
+        data-object="{one: 1, two: 2, three: 3}"
+        data-source="source">
+      Test method data
+	</button>
+  </div>
+
+  <a href="#" data-background-color="#990000">Paint it red</a><br />
+  
+  <a href="#" data-background-color="#009900" data-text-color="#FFFFFF">
+    Paint it green
+  </a><br />
+
+  <a href="#" data-background-color="#000099" data-text-color="#FFFFFF">
+    Paint it blue</a>
+  <br />
+
   <script>
-    //$( document ).ready(function() { // original
+    //$(document).ready(function() { // original
     //$().ready(function() { // simpler, not recommended
-    // Shorthand for $( document ).ready(), the simplest syntax
+    // Shorthand for $(document).ready(), the simplest syntax
     $(function() {
-      /* $( "a" ).click(function( event ) {
-        alert( "As you can see, the link no longer took you to jquery.com" );
+      /* $("a").click(function(event) {
+        alert("As you can see, the link no longer took you to jquery.com");
         event.preventDefault();
       }); */
-      $( "a" ).addClass( "test" );
       
-      $( "a" ).click(function( event ) { 
+      // http://stackoverflow.com/questions/1049112/what-is-the-meaning-of-symbol-in-jquery
+      // By default, jQuery uses "$" as a shortcut for "jQuery".
+      // So, using $("#id") or jQuery("#id") is the same.
+      $("a").addClass("test");
+      
+      $("#main_anchor").click(function(event) { 
         event.preventDefault();
-        $( this ).hide( "slow" );
+        $(this).hide("slow");
       });
       
       // .click(), .focus(), .blur(), .change(), etc. — are shorthand for jQuery's .on() method
       // Equivalent event setup using the `.on()` method
-      $( "a" ).on( "click", function() {
-        console.log( "click" );
+      $("a").on("click", function() {
+        console.log("click");
       });
     });
   </script>
+    <!-- http://api.jquery.com/data/ -->
+  <script type="text/javascript" src="method-data.js"></script>
 </body>
 </html>

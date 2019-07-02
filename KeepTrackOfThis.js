@@ -1,5 +1,5 @@
 /**
- * Create on May 30, 2015 Sat.
+ * Created on May 30, 2015 Sat.
  * Shows how to keep track of this in JavaScript.
  * 
  * See Keeping Track of "This" in JavaScript

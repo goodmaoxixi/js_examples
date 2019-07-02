@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <!--
+    Created on Fri Apr 5, 2019
+    https://square.github.io/intro-to-d3/data-binding/
+  -->
+  <head>
+    <title>Data Binding</title>
+    <meta charset="utf-8">  
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js">
+    </script>
+  </head>
+
+  <body>
+    <div>
+      <h3>D3.js Data Binding demo</h3>
+      See <a href="https://square.github.io/intro-to-d3/data-binding/">Data Binding</a>
+    </div>
+
+    <div><svg></svg></div>
+    
+    <div>
+      <input type="button" name="remove" value="Remove Last Bar" 
+             onclick="javascript:remove()" />
+    </div>
+
+    <script type="text/javascript">
+      "user strict";
+             
+      var sales = [
+        { product: 'Hoodie',  count: 7 },
+        { product: 'Jacket',  count: 6 },
+        { product: 'Snuggie', count: 9 },
+      ];
+
+      var svg = d3.select('svg')
+                  .attr('width', 300)
+                  .attr('height', 100);
+
+
+      console.log("The svg tag count: " + svg.size());
+      var rects = svg.selectAll('rect')
+                     .data(sales); // data binding
+      console.log("The rect count: " + rects.size());  
+
+      // Adds Elements with selection.enter()
+      var newRects = rects.enter();
+      var maxCount = d3.max(sales, function(d, i) {
+        return d.count;
+      });
+
+      // Recall that scales are functions that map from
+      // data space to screen space
+      var x = d3.scaleLinear()
+                .range([0, 300])        // screen pixels
+                .domain([0, maxCount]); // source data
+      /* The following is obsolete and incompatable.
+      var y = d3.scaleOrdinal()
+                .rangeRoundBands([0, 75])
+                .domain(sales.map(function(d, i) {
+                  return d.product;
+                })); */
+
+      var y = d3.scaleBand() // method 1: bnad
+                .domain(sales.map(function(d, i) {
+                  return d.product;
+                }))
+                .range([0, 75])
+                .paddingInner(0.1);
+      
+      // The original horizontal bars
+      newRects.append('rect')
+              .attr('x', x(0))
+              .attr('y', function(d, i) {
+                return y(d.product);
+              })
+              .attr('height', y.bandwidth()) // scaleBand only
+              // .attr('height', function(d) {
+              //   return y(d.product);
+              // })
+              .attr('width', function(d, i) {
+                return x(d.count);
+              });
+
+      // Removs elements with selection.exit()
+      var remove = function() {
+        sales.pop(); // drops the last element
+
+        var rects = svg.selectAll('rect')
+                       .data(sales); // join the data again
+        var rectsToRemove = rects.exit();
+        console.log("Rect count to be removed: " + rectsToRemove.size());
+        // 1 -- one element is part of the exit selection
+        rectsToRemove.remove(); // instantly removes
+      };
+    </script>
+  </body>
+</html>

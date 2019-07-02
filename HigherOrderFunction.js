@@ -1,5 +1,5 @@
 /**
- * Create on May 27, 2015 Wed.
+ * Created on May 27, 2015 Wed.
  * Page 86, 5 Higher-Order Functions, Eloquent JavaScript, A Modern Introduction to Programming by Marijn Haverbeke
  * See also 'Functions as values' on page 46.
  * Run with Node.js: node ./HigherOrderFuncton.js

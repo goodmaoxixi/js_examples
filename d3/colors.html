@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  Created on Sat Apr 13, 2019.
+  Managing colors in d3.js https://www.d3-graph-gallery.com/graph/custom_color.html
+-->
+<head>
+  <meta charset="utf-8" />
+  <title>D3 Colors</title>
+  <meta name="generator" content="Geany 1.27" />
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+  <div id="res">
+      <p>Just calling a color</p>
+  </div>
+  
+  <div id="divContinuous">
+    <p>Sequential color scales</p>
+    <div class=".firstrow"></div>
+    <div class=".secondrow"></div>
+    <div class=".thirdrow"></div>
+  </div>
+
+  <div id="divCategoric">
+    <p>Categorical color scales</p>
+    <div class=".fourthrow"></div>
+    <div class=".fifthrow"></div>
+  </div>
+  
+  <script>
+//    (function() {     
+    /* Just calling a color */        
+    // create svg element
+    var svg = d3.select("#res")
+                .append("svg")
+                .attr("width", 1000)
+                .attr("height",200);
+    
+    // With Hex code
+    svg.append("circle")
+       .attr("cx",50)
+       .attr("cy",100)
+       .attr("r",20)
+       .style("fill", "#69b3a2");
+    
+    // With Hex code
+    svg.append("circle")
+       .attr("cx",150)
+       .attr("cy",100)
+       .attr("r",20)
+       .style("fill", d3.color("steelblue") );
+    
+    // With RGBA (last number is the opacity)
+    svg.append("circle")
+       .attr("cx",250)
+       .attr("cy",100)
+       .attr("r",20)
+       .style("fill", "rgba(198, 45, 205, 0.8)");
+    
+    // With RGB
+    svg.append("circle")
+       .attr("cx",350)
+       .attr("cy",100)
+       .attr("r",20)
+       .style("fill", "rgb(12,240,233)");
+  
+    /* Sequential color scale */
+    
+    // create svg element
+    var svg = d3.select("#divContinuous")
+                .append("svg")
+                .attr("width", 1000)
+                .attr("height",400);
+
+  // Create data
+  var data1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  
+  // Option 1: give 2 color names
+  var myColor1 = d3.scaleLinear()
+                   .domain([1, 10])
+                   .range(["white", "blue"]);
+
+  svg.selectAll(".firstrow")
+     .data(data1)
+     .enter()
+     .append("circle")
+     .attr("cx", function(d,i){ return 30 + i*60 })
+     .attr("cy", 50).attr("r", 19)
+     .attr("fill", function(d){ return myColor1(d) });
+        
+    // Option 2: Color brewer
+    var myColor2 = d3.scaleSequential()
+                     .domain([1,10])
+                     .interpolator(d3.interpolatePuRd);
+    svg.selectAll(".secondrow")
+       .data(data1)
+       .enter()
+       .append("circle")
+       .attr("cx", function(d,i) { return 30 + i*60 })
+       .attr("cy", 150)
+       .attr("r", 19)
+       .attr("fill", function(d) { return myColor2(d) });
+
+    // Option 3: Viridis     
+    var myColor3 = d3.scaleSequential()
+                     .domain([1,10])
+                     .interpolator(d3.interpolateViridis);
+    svg.selectAll(".secondrow")
+       .data(data1)
+       .enter()
+       .append("circle")
+       .attr("cx", function(d, i) { return 30 + i*60 })
+       .attr("cy", 250)
+       .attr("r", 19)
+       .attr("fill", function(d){ return myColor3(d) });
+    
+     /* Categorical color scales */
+     // create svg element
+     var svg = d3.select("#divCategoric")
+                 .append("svg")
+                 .attr("width", 1000)
+                 .attr("height",400);
+    
+     // Create data
+     var data2 = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+    
+     // Option 1: provide color names:
+     var myColor4 = d3.scaleOrdinal()
+       .domain(data2)
+       .range(["gold", "blue", "green", "yellow", "black", "grey",
+         "darkgreen", "pink", "brown", "slateblue", "grey1", "orange"]);
+        
+      svg.selectAll(".fourthrow")
+         .data(data2)
+         .enter()
+         .append("circle")
+         .attr("cx", function(d, i) { return 30 + i*60 })
+         .attr("cy", 50)
+         .attr("r", 19)
+         .attr("fill", function(d) { return myColor4(d) });
+    
+     // Option 2: use a palette:
+     var myColor5 = d3.scaleOrdinal()
+                      .domain(data2)
+                      .range(d3.schemeSet3);
+     svg.selectAll(".fifthrow")
+        .data(data2)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d, i) { return 30 + i*60 })
+        .attr("cy", 150)
+        .attr("r", 19)
+        .attr("fill", function(d) { return myColor5(d) });
+//  })();
+  </script>
+</body>
+</html>

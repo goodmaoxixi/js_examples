@@ -1,5 +1,5 @@
 /**
- * Create on May 30, 2015 Sat.
+ * Created on May 30, 2015 Sat.
  * Run with Node.js: node ./DefaultArgumentValue.js
  *
  * The present JS engine doesn't support default arg vlues in function definition. Here is

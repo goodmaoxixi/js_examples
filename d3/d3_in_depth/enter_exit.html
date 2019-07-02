@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <title>Add elements using .enter and .append</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 14px;
+      color: #333;
+    }
+    .content div {
+      display: inline-block;
+      margin: 10px;
+      background-color: orange;
+      color: white;
+      padding: 30px;
+      width: 10px;
+      height: 10px;
+      text-align: center;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+</head>
+<body>
+  <div id="enter-append" class="content">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div id="menu-enter">
+    <button onClick="doEnter();">
+      Append elements using .enter and .append
+    </button>
+  </div>
+
+  <div id="enter-append2" class="content"></div>
+
+  <div id="enter2">
+    <button onClick="doEnter2();">
+      Create nonexistent elements using .enter and .append
+    </button>
+  </div>
+
+  <div id="menu-exit">
+    <button onClick="doExit();">
+      Remove elements using .exit and .remove
+    </button>
+  </div>
+
+  <script>
+    var myData = ['A', 'B', 'C', 'D', 'E'];
+
+    // .enter returns an enter selection which basically represents the
+    // elements that need to be added. It’s usually followed by .append which
+    // adds elements to the DOM.
+    function doEnter() {
+      d3.select('#enter-append')
+        .selectAll('div')
+        .data(myData) // update selection
+        .enter()      // enter selection
+        .append('div');
+    }
+
+    // Creates nonexistent elements
+    function doEnter2() {
+      d3.select('#enter-append2')
+        .selectAll('div')
+        .data(myData) // update selection
+        .enter()      // enter selection
+        .append('div');
+    }
+
+    var myData2 = ['A'];
+
+    // .exit returns an exit selection which consists of the elements that need
+    // to be removed from the DOM. It’s usually followed by .remove.
+    function doExit() {
+      d3.select('#enter-append2')
+        .selectAll('div')
+        .data(myData2) // update selection
+        .exit()        // exit selection
+        .remove();
+    }
+  </script>
+</body>
+</html>

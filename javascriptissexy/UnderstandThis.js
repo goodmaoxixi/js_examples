@@ -1,6 +1,7 @@
 /**
- * Create on Jun. 19, 2015 Fri.
- * Examples from an excellent website on JS: http://javascriptissexy.com/ by  Richard Bovell.
+ * Created on Jun. 19, 2015 Fri.
+ * Examples from an excellent website on JS: http://javascriptissexy.com/
+ * by  Richard Bovell.
  * Run in Node.js: node ./UnderstandThis.js
  *
  * Understand JavaScript’s “this” With Clarity, and Master It
@@ -169,9 +170,10 @@ var appController = {
   }
 };
 
-// If we run the code below,​ the gameController.avgScore property will be set to the average score
-// from the appController object "scores" array​.
-// Don't run this code, for it is just for illustration; we want the gameController.avgScore to remain null​
+// If we run the code below,​ the gameController.avgScore property will be
+// set to the average score from the appController object "scores" array​.
+// Don't run this code, for it is just for illustration; we want the
+// gameController.avgScore to remain null​
 //gameController.avgScore = appController.avg();
 
 // Note that we are using the apply() method, so the 2nd argument has to be an array
@@ -183,5 +185,6 @@ appController.avg.apply(gameController, gameController.scores);
 // even though we borrowed the avg() method from the appController object​
 console.log(gameController.avgScore); // 46.4​
 
-// appController.avgScore is still null; it was not updated, only gameController.avgScore was updated​
+// appController.avgScore is still null; it was not updated,
+// only gameController.avgScore was updated​
 console.log(appController.avgScore); // null

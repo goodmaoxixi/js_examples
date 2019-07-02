@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--
+  Created on Fri Apr 5, 2019
+  https://square.github.io/intro-to-d3/examples/
+-->
+<html>
+<head>
+  <title>Stacked Bar</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="https://d3js.org/d3.v4.min.js">
+  </script>
+</head>
+<body>
+  <div>
+    <h3>Stacked Bar Chart</h3>
+    <a href="https://square.github.io/intro-to-d3/examples/">
+      D3 Examples
+    </a>
+  </div>
+
+  <div>
+    <svg class="stack" width="300" height="400"></svg>
+  </div>
+
+  <script type="text/javascript">
+    "user strict";
+
+    var speed = 0;
+
+    var margin = { top: 35, left: 35, bottom: 80, right: 35 };
+    var svg = d3.select('svg.stack');
+    var width = +svg.attr("width") - margin.left - margin.right;
+    var height = +svg.attr("height") - margin.top - margin.bottom;
+          
+    var sales = [
+      { date: "2014-01-01", hoodies: 6, jackets: 2, snuggies: 3 },
+      { date: "2014-01-02", hoodies: 7, jackets: 5, snuggies: 2 },
+      { date: "2014-01-03", hoodies: 8, jackets: 7, snuggies: 3 }
+    ];
+
+    var stack = d3.stack()
+                  .keys(["hoodies", "jackets", "snuggies"]);
+    var stacked = stack(sales);
+
+    // We need to calculate the maximum y-value across all our layers, so we
+    // find the biggest end value.
+    var maxY = d3.max(stacked, function(d) {
+      return d3.max(d, function(d) {
+        return d[1];
+      });
+    });
+
+    var x = d3.scaleTime()
+              .range([margin.left, width + margin.left])
+              .domain(d3.extent(sales, function(d) {
+                return new Date(Date.parse(d.date));
+              }))
+              .nice(4);
+
+    var y = d3.scaleLinear()
+              .range([height + margin.top, margin.top])
+              .domain([0, maxY]);
+
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    var xAxis = svg.append("g")
+      .attr("transform", `translate(0,${height + margin.top})`)
+      .attr("class", "x-axis");
+
+    var yAxis = svg.append("g")
+      .attr("transform", `translate(${margin.left},0)`)
+      .attr("class", "y-axis");
+
+    svg.selectAll(".x-axis").transition().duration(speed)
+      .call(d3.axisBottom(x).ticks(3)
+              .tickFormat(d3.timeFormat("%Y-%m-%d")))
+      .selectAll("text")  
+        .style("text-anchor", "end")
+        .style("font-size", "12px")        
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
+
+    svg.selectAll(".y-axis").transition().duration(speed)
+      .call(d3.axisLeft(y).ticks(null, "s"));
+
+    // Binds a <g> tag for each layer
+    var layers = svg.selectAll('g.layer')
+                    .data(stacked, function(d) { return d.key; })
+                    .enter()
+                    .append('g')
+                    .attr('class', 'layer')
+                    .attr('fill', function(d) { return color(d.key); });
+
+    // Binds a <rect> to each value inside the layer
+    layers.selectAll('rect')
+          .data(function(d) { return d; })
+          .enter()
+          .append('rect')
+          .attr('x', function(d) {
+            var x1 = x(new Date(Date.parse(d.data.date))) - margin.left;
+            // console.log("date1: " + d.data.date + "; x1: " + x1);
+            return x1;
+          })
+          .attr('y', function(d) {
+            // remember that SVG is y-down while our graph is y-up!
+            // here, we set the top-left of this bar segment to the
+            // larger value of the pair
+            return y(d[1]);
+          })
+          .attr('width', width / 3)
+          .attr('height', function(d) {
+            // since we are drawing our bar from the top downwards,
+            // the length of the bar is the distance between our points
+            return y(d[0]) - y(d[1]);
+          });
+  </script>
+</body>
+</html>

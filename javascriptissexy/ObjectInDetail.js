@@ -1,5 +1,5 @@
 /**
- * Create on Jun. 20, 2015 Sat.
+ * Created on Jun. 20, 2015 Sat.
  * Examples from an excellent website on JS: http://javascriptissexy.com/ by  Richard Bovell.
  * Run in Node.js: node ./ObjectInDetail.js
  * 
@@ -119,9 +119,9 @@ aMango.printStuff = function() { return "Printing"; };
 // Now we can invoke the printStuff method:
 console.log(aMango.printStuff());
 
+
 console.log("4.2 *** Prototype Pattern for Creating Objects ---");
-function Fruit4() {
-}
+function Fruit4() {}
 
 Fruit4.prototype.color = "Yellow";
 Fruit4.prototype.sweetness = 7;

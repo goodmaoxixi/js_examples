@@ -1,5 +1,5 @@
 /**
- * Create on May 27, 2015 Wed.
+ * Created on May 27, 2015 Wed.
  * See Page 45 of Eloquent JavaScript, A Modern Introduction to Programming by Marijn Haverbeke
  * Run with Node.js: node ./NestedScope.js
  */

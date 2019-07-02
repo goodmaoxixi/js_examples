@@ -1,5 +1,5 @@
 /**
- * Create on May 31, 2015 Sun.
+ * Created on May 31, 2015 Sun.
  * 
  * JavaScript is function-scope, different from other languages' block-scope.
  * 
