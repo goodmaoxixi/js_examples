@@ -67,7 +67,7 @@ function chart(csv) {
 
   update(csv, 0);
 
-  // 0. Appends the legend SVG element (intialization)
+  // 0. Appends the legend SVG element for legend (intialization)
   d3.select("#lan-bar-chart-legend")
     .append("svg:svg")
     .attr("class", "legend");
@@ -107,12 +107,17 @@ function chart(csv) {
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("transform", "rotate(-65)");
+    
+    /* I. Stacked bars */
 
+    // 1. Joins data
     var group = svg.selectAll("g.layer")
       .data(d3.stack().keys(keys)(data), function(d) { return d.key; });
-
+    
+    // 2. Exits and removes to get rid of any redundant DOM elements
     group.exit().remove();
 
+    // 3. Enters & appends a group — making sure you assign the same class
     group.enter().append("g")
       .classed("layer", true)
       .attr("fill", function(d) { return z(d.key); });
@@ -122,6 +127,7 @@ function chart(csv) {
 
     bars.exit().remove();
 
+    // 5. Merges groups
     bars.enter().append("rect")      
       .merge(bars)
       .transition().duration(speed)
@@ -130,11 +136,18 @@ function chart(csv) {
       .attr("y", function(d) { return y(d[1]); })
       .attr("height", function(d) { return y(d[0]) - y(d[1]); });
 
+    /* II. Labels */
+
+    // 1. Joins data
     var text = svg.selectAll(".text")
       .data(data, function(d) { return d.vlan_name; });
-
+    
+    // 2. Exits and removes to get rid of any redundant DOM elements
     text.exit().remove();
-
+    
+    // 3. Enters & appends a group — making sure you assign the same class
+    // 4. Appends the DOM elements you need to the group
+    // 5. Merges groups
     text.enter().append("text")
       .attr("class", "text")
       .attr("text-anchor", "middle")
@@ -155,6 +168,8 @@ function chart(csv) {
                    .on("click", function() {
       update(csv, 750);
     });
+
+  /* III. Legend */
 
   function drawLegend() {
     // 1. Joins data to all groups of the legend
