@@ -71,6 +71,7 @@ function chart(csv) {
   d3.select("#lan-bar-chart-legend")
     .append("svg:svg")
     .attr("class", "legend");
+
   drawLegend();
   
   window.addEventListener("resize", updateClientWidth);
@@ -123,7 +124,7 @@ function chart(csv) {
 
     bars.enter().append("rect")      
       .merge(bars)
-    .transition().duration(speed)
+      .transition().duration(speed)
       .attr("width", x.bandwidth())
       .attr("x", function(d) { return x(d.data.vlan_name); })
       .attr("y", function(d) { return y(d[1]); })
@@ -138,7 +139,7 @@ function chart(csv) {
       .attr("class", "text")
       .attr("text-anchor", "middle")
       .merge(text)
-    .transition().duration(speed)
+      .transition().duration(speed)
       .style("fill", "black")
       .style("font-size", "12px")
       .attr("dy", ".35em")
@@ -194,7 +195,7 @@ function chart(csv) {
   // Redraws the stacked bar chart after the window resizes.
   function updateClientWidth() {
     svg = d3.select("#lan-chart")
-              .attr("width", chartDiv.clientWidth);
+            .attr("width", chartDiv.clientWidth);
     width = +svg.attr("width") - margin.left - margin.right;
     update(csv, 750);
 
