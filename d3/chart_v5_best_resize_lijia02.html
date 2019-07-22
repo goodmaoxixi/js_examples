@@ -43,11 +43,22 @@ function chart() {
     x.domain(dataset.map( d => { return d.year; }));
 
     var h = margin.top + height;
+    
     svg.append("g")
        .attr("class", "x axis")
        .attr("transform", "translate(0," + h + ")")
        .call(xAxis)
-       .selectAll("text")
+       // .selectAll("text")
+       // .data(dataset)
+
+var text = svg.call(xAxis).selectAll("text")
+       .data(dataset)
+       
+       text.exit().remove();
+
+       text.enter().append("text")
+       .attr("class", "text")
+       .merge(text)
        .attr("y", 0)
        .attr("x", 9)
        .attr("dy", ".35em")
@@ -95,6 +106,7 @@ function chart() {
     // 3. Enters & appends a group — making sure you assign the same class
     // 4. Appends the DOM elements you need to the group
     // 5. Merges groups    
+    // labels is the value of rect bars
     labels.enter().append("text")
           .merge(labels)
           .attr("class", "label")
